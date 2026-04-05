@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
+---
+<Layout title="n3n — Neha Nupoor">
+  <style>
+    .hero { padding: 3rem 0 2rem; }
+    .hero h1 { font-size: 2rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .hero p { color: #57534e; font-size: 1.05rem; max-width: 520px; }
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #a8a29e;
+      margin: 2.5rem 0 1rem;
+    }
+    .post-list { list-style: none; }
+    .post-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e7e5e4;
+      gap: 1rem;
+    }
+    .post-item a { font-weight: 500; color: #1c1917; }
+    .post-item a:hover { color: #2563eb; text-decoration: none; }
+    .post-date { color: #a8a29e; font-size: 0.85rem; white-space: nowrap; }
+    .all-link { display: inline-block; margin-top: 1.25rem; font-size: 0.9rem; color: #2563eb; }
+  </style>
+
+  <div class="hero">
+    <h1>Neha Nupoor</h1>
+    <p>Writing on technology, systems, and ideas that matter.</p>
+  </div>
+
+  {posts.length > 0 && (
+    <>
+      <p class="section-title">Recent Writing</p>
+      <ul class="post-list">
+        {posts.map(post => (
+          <li class="post-item">
+            <a href={`/writing/${post.slug}`}>{post.data.title}</a>
+            <span class="post-date">
+              {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <a class="all-link" href="/writing">All writing →</a>
+    </>
+  )}
+</Layout>
