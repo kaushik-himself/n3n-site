@@ -23,3 +23,10 @@ Your content here.
 ```
 
 Push to `main` → Cloudflare auto-deploys.
+
+## Writing on Substack
+
+The Writing navigation and All writing link open https://nupoorneha.substack.com.
+Cloudflare Pages permanently redirects `/writing` and `/writing/` there using
+`public/_redirects`. The generated writing index also includes a browser redirect
+and a clickable fallback for static previews. Existing article paths are preserved.
