@@ -1,33 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getCollection('blog')).filter(post=>!post.data.draft).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
 ---
-<Layout title="Writing — n3n" description="Articles by Neha Nupoor">
-  <style>
-    h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 2rem; }
-    .post-list { list-style: none; }
-    .post-item { padding: 1.25rem 0; border-bottom: 1px solid #e7e5e4; }
-    .post-item:first-child { border-top: 1px solid #e7e5e4; }
-    .post-item a { font-size: 1.1rem; font-weight: 500; color: #1c1917; }
-    .post-item a:hover { color: #2563eb; text-decoration: none; }
-    .post-meta { color: #a8a29e; font-size: 0.85rem; margin-top: 0.35rem; }
-    .post-desc { color: #57534e; font-size: 0.95rem; margin-top: 0.5rem; }
-  </style>
-
-  <h1>Writing</h1>
-  <ul class="post-list">
-    {posts.map(post => (
-      <li class="post-item">
-        <a href={`/writing/${post.slug}`}>{post.data.title}</a>
-        <p class="post-meta">
-          {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-        </p>
-        {post.data.description && <p class="post-desc">{post.data.description}</p>}
-      </li>
-    ))}
-    {posts.length === 0 && <li style="color: #a8a29e; padding: 1rem 0;">Posts coming soon.</li>}
-  </ul>
+<Layout title="Writing — Neha Nupoor" description="Neha Nupoor's notes on technology, systems, and ideas.">
+  <section class="archive-header"><p class="eyebrow">The notebook</p><h1>Thinking<br />on <em>paper.</em></h1><p>I write about technology, systems, and the ideas I keep coming back to.</p></section>
+  <div class="archive-bar"><span>All writing</span><span>{posts.length} {posts.length===1?'entry':'entries'}</span></div>
+  <div class="post-list">{posts.map((post,index)=><a class="post-row" href={`/writing/${post.slug}/`}><span class="post-number">{String(index+1).padStart(2,'0')}</span><div><h2>{post.data.title}</h2>{post.data.description && <p>{post.data.description}</p>}</div><div class="post-date"><time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'})}</time><span aria-hidden="true">↗</span></div></a>)}</div>
+  {posts.length===0 && <p class="empty-note">Nothing published here yet. The reading room is open.</p>}
+  <aside class="archive-aside"><span class="eyebrow">Between entries</span><p>There’s more in the margins.</p><a class="text-link" href="https://reading.nehanupoor.com/">Visit the reading room <span aria-hidden="true">↗</span></a></aside>
 </Layout>

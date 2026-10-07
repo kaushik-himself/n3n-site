@@ -1,58 +1,59 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 5);
+const posts = (await getCollection('blog')).filter(post => !post.data.draft)
+  .sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0,3);
+const formatDate = (date:Date) => date.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'});
 ---
-<Layout title="n3n — Neha Nupoor">
-  <style>
-    .hero { padding: 3rem 0 2rem; }
-    .hero h1 { font-size: 2rem; font-weight: 600; margin-bottom: 0.75rem; }
-    .hero p { color: #57534e; font-size: 1.05rem; max-width: 520px; }
-    .section-title {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #a8a29e;
-      margin: 2.5rem 0 1rem;
-    }
-    .post-list { list-style: none; }
-    .post-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid #e7e5e4;
-      gap: 1rem;
-    }
-    .post-item a { font-weight: 500; color: #1c1917; }
-    .post-item a:hover { color: #2563eb; text-decoration: none; }
-    .post-date { color: #a8a29e; font-size: 0.85rem; white-space: nowrap; }
-    .all-link { display: inline-block; margin-top: 1.25rem; font-size: 0.9rem; color: #2563eb; }
-  </style>
-
-  <div class="hero">
-    <h1>Neha Nupoor</h1>
-    <p>Writing on technology, systems, and ideas that matter.</p>
-  </div>
-
-  {posts.length > 0 && (
-    <>
-      <p class="section-title">Recent Writing</p>
-      <ul class="post-list">
-        {posts.map(post => (
-          <li class="post-item">
-            <a href={`/writing/${post.slug}`}>{post.data.title}</a>
-            <span class="post-date">
-              {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <a class="all-link" href="/writing">All writing →</a>
-    </>
-  )}
+<Layout title="Neha Nupoor — reading, writing, building">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="tiny-mark" aria-hidden="true"></span> A personal corner of the internet</p>
+      <h1 id="hero-title">I’m Neha.<br />I read, build,<br />and <em>write.</em></h1>
+      <p class="hero-description">Technology, systems, and the ideas I keep coming back to. This is where I put some of them.</p>
+      <a class="text-link" href="/writing/">Read the writing <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="art-caption"><span>Notes from the margins</span><span>01 / n3n</span></div>
+      <svg class="desk-drawing" viewBox="0 0 440 390" fill="none">
+        <ellipse cx="229" cy="343" rx="167" ry="16" fill="#e5dccb" />
+        <path d="M92 295 324 295 354 327 118 327Z" fill="#335d56" stroke="#292d28" stroke-width="2" />
+        <path d="M118 327 354 327 354 340 118 340Z" fill="#335d56" stroke="#292d28" stroke-width="2" />
+        <path d="M101 292 322 292 346 320 126 320Z" fill="#f2e5cc" stroke="#292d28" stroke-width="2" />
+        <path d="M111 299 329 299M117 305 335 305M122 311 340 311" stroke="#baad94" />
+        <path d="M74 277 296 263 325 288 104 305Z" fill="#c56b47" stroke="#292d28" stroke-width="2" />
+        <path d="M104 305 325 288 325 300 104 317Z" fill="#c56b47" stroke="#292d28" stroke-width="2" />
+        <path d="M88 275 293 268 318 287 110 301Z" fill="#f2e5cc" stroke="#292d28" stroke-width="2" />
+        <path d="M128 127 227 159 320 125 332 268 235 301 135 270Z" fill="#f8f1e2" stroke="#292d28" stroke-width="2.2" />
+        <path d="M227 159 235 301M140 141 217 165M141 150 217 174M143 159 218 183M144 168 218 192M146 177 219 201M147 186 219 210M149 195 220 219M150 204 220 228M152 213 221 237M153 222 221 246M155 231 222 255M157 240 222 264" stroke="#c4b8a1" />
+        <path d="M241 168 304 147M242 177 305 156M243 186 306 165M244 195 307 174M245 204 308 183M246 213 309 192M247 222 310 201M248 231 311 210M249 240 312 219M250 249 313 228M251 258 314 237M252 267 315 246" stroke="#c4b8a1" />
+        <path d="M264 150 280 144 288 234 279 227 271 240Z" fill="#c56b47" />
+        <path d="M62 137Q35 124 52 104Q66 88 63 74M79 133Q53 119 71 103Q86 89 80 77" stroke="#96896f" stroke-width="1.8" stroke-linecap="round" />
+        <path d="M37 158H91L86 207Q63 221 43 207Z" fill="#e3bf69" stroke="#292d28" stroke-width="2" />
+        <path d="M90 165Q119 160 111 184Q109 196 89 195" stroke="#292d28" stroke-width="2" />
+        <ellipse cx="64" cy="158" rx="27" ry="6" fill="#392b24" stroke="#292d28" stroke-width="2" />
+        <path d="M345 60 347 94M330 77 362 77M335 65 357 88M357 65 335 88" stroke="#b34f35" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M360 183Q385 174 396 199M369 181 365 171M369 181 378 178" stroke="#96896f" stroke-width="1.4" stroke-linecap="round" />
+      </svg>
+      <p class="art-note">A few good books.<br />A thought worth keeping.</p>
+    </div>
+  </section>
+  <section class="reading-feature" aria-labelledby="reading-title">
+    <div class="feature-copy">
+      <p class="eyebrow">An open shelf</p>
+      <h2 id="reading-title">The reading <em>room.</em></h2>
+      <p>Books, passages, and notes I’ve collected along the way. Follow a thought across books, or look back through a month of reading.</p>
+      <a class="pill-link" href="https://reading.nehanupoor.com/">Come in, have a look <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="shelf-art" aria-hidden="true">
+      <span class="shelf-label">FROM MY BOOKSHELF</span>
+      <div class="bookshelf"><div class="spine spine-a">READING</div><div class="spine spine-b">IN THE MARGINS</div><div class="spine spine-c">IDEAS</div><div class="spine spine-d">NOTES</div><div class="spine spine-e">ONE MORE PAGE</div></div>
+      <p>Some things are better<br />with the page left open.</p>
+    </div>
+  </section>
+  <section class="writing-section" aria-labelledby="writing-title">
+    <div class="section-heading"><div><p class="eyebrow">From the notebook</p><h2 id="writing-title">A little <em>writing.</em></h2></div><a class="text-link" href="/writing/">All writing <span aria-hidden="true">→</span></a></div>
+    <div class="post-list">{posts.map((post,index) => <a class="post-row" href={`/writing/${post.slug}/`}><span class="post-number">{String(index+1).padStart(2,'0')}</span><div><h3>{post.data.title}</h3>{post.data.description && <p>{post.data.description}</p>}</div><div class="post-date"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><span aria-hidden="true">↗</span></div></a>)}</div>
+    {posts.length === 0 && <p class="empty-note">Nothing published here yet. The reading room is open.</p>}
+  </section>
 </Layout>
