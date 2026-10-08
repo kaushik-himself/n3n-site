@@ -2,8 +2,9 @@
 interface Props {
   title: string;
   description?: string;
+  redirectTo?: string;
 }
-const { title, description = 'Neha Nupoor — writing on technology, systems, and ideas.' } = Astro.props;
+const { title, redirectTo, description = 'Neha Nupoor — writing on technology, systems, and ideas.' } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +13,8 @@ const { title, description = 'Neha Nupoor — writing on technology, systems, an
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
   <title>{title}</title>
+  {redirectTo && <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />}
+  {redirectTo && <link rel="canonical" href={redirectTo} />}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" />
   <style>
@@ -70,7 +73,7 @@ const { title, description = 'Neha Nupoor — writing on technology, systems, an
       <a class="logo" href="/">n3n</a>
       <nav>
         <a href="/">Home</a>
-        <a href="/writing">Writing</a>
+        <a href="https://nupoorneha.substack.com">Writing</a>
       </nav>
     </div>
   </header>

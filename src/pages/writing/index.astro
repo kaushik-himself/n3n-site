@@ -1,33 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const substackUrl = 'https://nupoorneha.substack.com';
 ---
-<Layout title="Writing — n3n" description="Articles by Neha Nupoor">
-  <style>
-    h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 2rem; }
-    .post-list { list-style: none; }
-    .post-item { padding: 1.25rem 0; border-bottom: 1px solid #e7e5e4; }
-    .post-item:first-child { border-top: 1px solid #e7e5e4; }
-    .post-item a { font-size: 1.1rem; font-weight: 500; color: #1c1917; }
-    .post-item a:hover { color: #2563eb; text-decoration: none; }
-    .post-meta { color: #a8a29e; font-size: 0.85rem; margin-top: 0.35rem; }
-    .post-desc { color: #57534e; font-size: 0.95rem; margin-top: 0.5rem; }
-  </style>
-
+<Layout title="Writing — n3n" description="Articles by Neha Nupoor" redirectTo={substackUrl}>
   <h1>Writing</h1>
-  <ul class="post-list">
-    {posts.map(post => (
-      <li class="post-item">
-        <a href={`/writing/${post.slug}`}>{post.data.title}</a>
-        <p class="post-meta">
-          {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-        </p>
-        {post.data.description && <p class="post-desc">{post.data.description}</p>}
-      </li>
-    ))}
-    {posts.length === 0 && <li style="color: #a8a29e; padding: 1rem 0;">Posts coming soon.</li>}
-  </ul>
+  <p><a href={substackUrl}>Read my writing on Substack →</a></p>
 </Layout>
