@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "n3n-site",
+  "account_id": "56f0fb415275dd4188e7a83c230c6bc0",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {"directory": "./dist", "not_found_handling": "404-page"},
+  "routes": [
+    {"pattern": "n3n.lol", "custom_domain": true},
+    {"pattern": "www.n3n.lol", "custom_domain": true},
+    {"pattern": "nehanupoor.com", "custom_domain": true},
+    {"pattern": "www.nehanupoor.com", "custom_domain": true}
+  ],
+  "observability": {"enabled": true}
+}

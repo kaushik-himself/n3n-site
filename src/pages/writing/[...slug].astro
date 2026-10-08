@@ -1,35 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-
-export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map(post => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
-}
-
-const { post } = Astro.props;
-const { Content } = await post.render();
+export async function getStaticPaths(){return (await getCollection('blog')).filter(post=>!post.data.draft).map(post=>({params:{slug:post.slug},props:{post}}));}
+const {post}=Astro.props;
+const {Content}=await post.render();
 ---
-<Layout title={`${post.data.title} — n3n`} description={post.data.description}>
-  <style>
-    .article-header { padding-bottom: 2rem; border-bottom: 1px solid #e7e5e4; margin-bottom: 2rem; }
-    .article-header h1 { font-size: 1.85rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.75rem; }
-    .article-meta { color: #a8a29e; font-size: 0.9rem; }
-    .back { display: inline-block; color: #a8a29e; font-size: 0.9rem; margin-bottom: 2rem; }
-    .back:hover { color: #2563eb; text-decoration: none; }
-  </style>
-
-  <a class="back" href="/writing">← All writing</a>
-  <div class="article-header">
-    <h1>{post.data.title}</h1>
-    <p class="article-meta">
-      {post.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-    </p>
-  </div>
-  <div class="prose">
-    <Content />
-  </div>
+<Layout title={`${post.data.title} — Neha Nupoor`} description={post.data.description}>
+  <article class="article">
+    <a class="text-link back-link" href="/writing/">← All writing</a>
+    <header class="article-header"><p class="eyebrow">From the notebook</p><h1>{post.data.title}</h1><p class="article-meta">Neha Nupoor <span aria-hidden="true">·</span> <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'})}</time></p></header>
+    <div class="prose"><Content /></div>
+    <footer class="article-end"><span aria-hidden="true">✳</span><p>More passages, more notes.</p><a class="text-link" href="https://reading.nehanupoor.com/">Visit the reading room ↗</a></footer>
+  </article>
 </Layout>

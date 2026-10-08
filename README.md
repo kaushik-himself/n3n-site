@@ -1,32 +1,35 @@
-# n3n.com
+# n3n — Neha Nupoor
 
-Personal site for Neha Nupoor. Built with [Astro](https://astro.build), hosted on Cloudflare Pages.
+Personal writing site built with Astro and hosted as the `n3n-site` Cloudflare
+Worker with static assets. The same deployment serves n3n.lol, www.n3n.lol,
+nehanupoor.com, and www.nehanupoor.com. The canonical address is n3n.lol.
 
-## Structure
+## Develop and deploy
 
-- `src/content/blog/` — markdown posts
-- `src/pages/` — site pages
-- `src/layouts/` — page templates
-
-## Adding a post
-
-Create a new `.md` file in `src/content/blog/`:
-
-```markdown
----
-title: "Your Post Title"
-description: "A short description."
-pubDate: 2026-04-05
----
-
-Your content here.
+```sh
+npm ci
+npm run dev
+npm run build
+npx wrangler deploy --keep-vars
 ```
 
-Push to `main` → Cloudflare auto-deploys.
+The checked-in Wrangler configuration preserves all four existing domains and
+pins the owner's Cloudflare account. Wrangler requires an authorized login to
+that account. Keep preview deployments disabled. Review changes through a
+feature branch and draft PR before merging. GitHub is the code source; a push
+alone does not prove Cloudflare deployed it.
 
-## Writing on Substack
+## Writing
 
-The Writing navigation and All writing link open https://nupoorneha.substack.com.
-Cloudflare Pages permanently redirects `/writing` and `/writing/` there using
-`public/_redirects`. The generated writing index also includes a browser redirect
-and a clickable fallback for static previews. Existing article paths are preserved.
+Writing navigation and homepage calls to action open https://nupoorneha.substack.com.
+The static asset `_redirects` file sends `/writing` and `/writing/` there with HTTP 301.
+The generated index includes a browser redirect and clickable fallback. Existing
+article routes are preserved; Markdown or MDX content remains in `src/content/blog/`.
+
+## Reading room
+
+Navigation and homepage links use https://reading.nehanupoor.com/. That hostname
+and reading.n3n.lol are served by the separate reading-room-public gateway in the
+same Cloudflare account, with code in neha-nupoor/reading-room. The writing site
+has no reading database credential and never queries the library. Daily and
+monthly enrichment remain with the existing reading-room app.
