@@ -1,6 +1,6 @@
 ---
 title: "Hello, World"
-description: "Starting something new at n3n.com."
+description: "A first note on n3n."
 pubDate: 2026-04-05
 ---
 
