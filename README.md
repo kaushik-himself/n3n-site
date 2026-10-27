@@ -30,7 +30,7 @@ article routes are preserved; Markdown or MDX content remains in `src/content/bl
 
 `/privacy/` and `/terms/` are public static pages on both n3n.lol and
 nehanupoor.com. They cover the personal websites and the private
-`Hermes - Signups` assistant, with nehan.signup@gmail.com as the support and
+`Hermes - Signups` and `Hermes Personal Work` assistants, with nehan.signup@gmail.com as the support and
 privacy contact. Keep their descriptions consistent with the assistant's actual
 data handling and configured providers.
 
