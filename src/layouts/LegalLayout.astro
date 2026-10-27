@@ -1,0 +1,16 @@
+---
+import Layout from './Layout.astro';
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+---
+<Layout title={`${title} — Neha Nupoor / n3n`} description={description}>
+  <article class="legal-page">
+    <a class="back-link" href="/">← Back to the homepage</a>
+    <header class="legal-header">
+      <p class="eyebrow">Neha Nupoor · n3n · Hermes - Signups</p>
+      <h1>{title}</h1>
+      <p class="legal-date">Effective and last updated <time datetime="2026-10-27">October 27, 2026</time></p>
+    </header>
+    <div class="legal-body"><slot /></div>
+  </article>
+</Layout>

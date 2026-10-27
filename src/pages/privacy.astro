@@ -1,0 +1,45 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+---
+<LegalLayout title="Privacy policy" description="How Neha Nupoor’s personal websites and the private Hermes - Signups assistant handle website visits and connected Google account data.">
+  <p>This policy covers <a href="https://n3n.lol/">n3n.lol</a>, <a href="https://nehanupoor.com/">nehanupoor.com</a>, and <strong>Hermes - Signups</strong>, a private personal assistant operated by Neha Nupoor (“I,” “me,” or “the operator”). The websites share the same content and policy. The assistant is for my personal workflows; it does not offer public registration.</p>
+  <p>Questions or requests about your data: <a href="mailto:nehan.signup@gmail.com">nehan.signup@gmail.com</a>.</p>
+
+  <h2 id="website-visits">1. Visiting these websites</h2>
+  <p>You can read the public websites without connecting a Google account. Visiting a page does not give the websites access to your email, calendar, or files.</p>
+  <p>The websites are hosted on Cloudflare. The hosting service may process technical information such as your IP address, requested URL, browser information, request times, and security or error events to deliver and protect the websites. Pages also load fonts from Google Fonts, which receives the information needed to serve those requests. The site does not include advertising or marketing trackers.</p>
+  <p>Links to services such as Substack and the separate Reading Room take you to services with their own privacy practices. This policy does not replace their policies.</p>
+
+  <h2 id="connected-data">2. Data the private assistant can access</h2>
+  <p>Hermes - Signups uses Google OAuth: the account owner approves the requested permissions on Google’s consent screen. The assistant does not need the account’s Google password. Access is limited by the permissions actually granted and the task the account owner authorizes.</p>
+  <ul>
+    <li><strong>Gmail:</strong> account information, message headers and contents, threads, labels, and attachments when needed to search, summarize, organize, draft, or carry out an authorized email action.</li>
+    <li><strong>Google Calendar:</strong> calendars, event details, dates, attendees, and availability when needed to review or manage the owner’s schedule.</li>
+    <li><strong>Google Drive and connected documents:</strong> file names, metadata, and file or document contents when needed to find, read, summarize, or carry out authorized work on the owner’s files.</li>
+    <li><strong>Connection and task records:</strong> OAuth credentials, connection status, task instructions, relevant conversation history, and outputs needed to run the requested workflow.</li>
+  </ul>
+  <p>These categories describe the assistant’s functions; they do not mean every permission is always requested or every item in an account is copied. The Google consent screen controls the access granted. Public website visitors do not gain access to the private assistant or its connected accounts.</p>
+
+  <h2 id="purposes">3. Why data is used</h2>
+  <p>Connected data is used to provide the personal-assistant features described on the homepage: finding and summarizing email, preparing replies, organizing information, reviewing schedules, and working with files. The assistant also uses necessary connection information to authenticate requests and diagnose failures. Sending messages, changing calendar events, or modifying files requires the account owner’s instructions.</p>
+  <p>Relevant content may be processed by the AI provider selected for a task. Private task histories, outputs, or notes may retain information needed for the owner’s ongoing workflows. Connected Google data is not published on these public websites merely because an account is connected.</p>
+
+  <h2 id="sharing">4. Service providers and data sharing</h2>
+  <p>The workflow may use Google’s APIs, locally operated credential tools such as Agent Vault, and configured providers for AI inference, private storage, and hosting. Only the information needed for the authorized feature is supplied to a provider. A task may also transfer information to a recipient or service when the account owner expressly directs that action, such as sending an email.</p>
+  <p>Google user data is not sold or shared for advertising, data brokerage, or credit decisions. It is not used to train or improve general-purpose AI or machine-learning models. Providers processing Google data must support those restrictions; a connection is not permission for unrelated reuse.</p>
+  <p>Human access to connected Google data is limited to the account owner’s affirmative agreement, necessary security investigations, or legal requirements, consistent with Google’s policies. Information may be disclosed when required by applicable law or needed to investigate abuse and protect security.</p>
+
+  <h2 id="limited-use">5. Google API Limited Use</h2>
+  <p>For information obtained through Google APIs, Hermes - Signups follows the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including its <a href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes">Limited Use requirements</a>, and the <a href="https://developers.google.com/workspace/workspace-api-user-data-developer-policy">Google Workspace user data and developer policy</a>. These restrictions apply to Google data and information derived from it, including when a service provider processes that information for the assistant.</p>
+
+  <h2 id="storage">6. Storage, security, and retention</h2>
+  <p>OAuth credentials belong in private credential storage, not in the public website or its source code. The current local connection uses encrypted Agent Vault credential storage. Connections to Google APIs use HTTPS. Access to the assistant and its configured storage is restricted to authorized workflows.</p>
+  <p>Task content and derived notes may remain in the owner’s private assistant history or configured storage until they are removed or are no longer needed for the workflow. Credential records may remain in the configured credential store until removed, even after a token is revoked. Hosting and inference providers may also apply their documented security and retention practices. No fixed automatic deletion period is promised for all of these systems.</p>
+
+  <h2 id="control">7. Revoking access and requesting deletion</h2>
+  <p>You can revoke the assistant’s Google access in your <a href="https://myaccount.google.com/connections">Google Account’s third-party connections settings</a>. Revocation stops further access once Google processes it; it does not automatically erase existing task history, private notes, or the original messages and files in your Google account.</p>
+  <p>To request access to, correction of, or deletion of data held by this assistant, email <a href="mailto:nehan.signup@gmail.com">nehan.signup@gmail.com</a> and identify the account and records concerned. Requests are handled after verifying the requester’s authority. Applicable legal requirements and provider-controlled retention can affect what can be removed. Do not send passwords or OAuth tokens in a request.</p>
+
+  <h2 id="changes">8. Changes and contact</h2>
+  <p>This policy may change when the websites, assistant, or data practices change. The updated version and date will be published here. Questions about this policy can be sent to <a href="mailto:nehan.signup@gmail.com">nehan.signup@gmail.com</a>. See also the <a href="/terms/">Terms of service</a>.</p>
+</LegalLayout>
