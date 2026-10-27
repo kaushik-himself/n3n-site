@@ -26,6 +26,18 @@ The static asset `_redirects` file sends `/writing` and `/writing/` there with H
 The generated index includes a browser redirect and clickable fallback. Existing
 article routes are preserved; Markdown or MDX content remains in `src/content/blog/`.
 
+## Privacy, terms, and Google OAuth branding
+
+`/privacy/` and `/terms/` are public static pages on both n3n.lol and
+nehanupoor.com. They cover the personal websites and the private
+`Hermes - Signups` and `Hermes Personal Work` assistants, with nehan.signup@gmail.com as the support and
+privacy contact. Keep their descriptions consistent with the assistant's actual
+data handling and configured providers.
+
+The OAuth branding URLs use the canonical domain: `https://n3n.lol/`,
+`https://n3n.lol/privacy/`, and `https://n3n.lol/terms/`. Publishing these pages does
+not change OAuth permissions, audience, publishing status, or verification.
+
 ## Reading room
 
 Navigation and homepage links use https://reading.nehanupoor.com/. That hostname

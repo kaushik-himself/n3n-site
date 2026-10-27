@@ -29,14 +29,14 @@ const writing = Astro.url.pathname.startsWith('/writing');
   <header class="site-header wrap">
     <a class="wordmark" href="/" aria-label="Neha Nupoor, home">n3n<span aria-hidden="true">✳</span></a>
     <nav aria-label="Main navigation">
-      <a href="/" aria-current={!writing ? 'page' : undefined}>Home</a>
+      <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
       <a href="https://nupoorneha.substack.com" aria-current={writing ? 'page' : undefined}>Writing</a>
       <a href="https://reading.nehanupoor.com/" class="reading-nav">Reading room <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
   <main id="main" class="wrap"><slot /></main>
   <footer class="site-footer wrap">
-    <div><a class="footer-name" href="/">Neha Nupoor</a><p>Technology, systems, and ideas.</p></div>
+    <div><a class="footer-name" href="/">Neha Nupoor</a><p>Technology, systems, and ideas.</p><nav class="footer-legal" aria-label="Legal"><a href="/privacy/">Privacy policy</a><a href="/terms/">Terms of service</a></nav></div>
     <div class="footer-right"><a href="https://reading.nehanupoor.com/">A little more reading <span aria-hidden="true">↗</span></a><p>© {new Date().getFullYear()} · n3n</p></div>
   </footer>
 </body>
