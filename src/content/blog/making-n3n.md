@@ -45,18 +45,6 @@ The palette is deliberately neutral. The gradient stops use equal red, green, an
 
 This is the small version of the material. The visible rim and reflection use extra layers. It is a web interpretation of [Apple’s Liquid Glass guidance](https://developer.apple.com/design/human-interface-guidelines/materials); it does not use Apple’s native rendering system. Reduced-transparency and higher-contrast preferences switch the navigation to more solid surfaces.
 
-## A window that belongs to the browser.
-
-The app frame is an element inside the page. It does not open another browser window. Its position, size, selected page, and open state are kept separately, which lets the content change without resetting the frame.
-
-Dragging starts in the title bar. Pointer capture keeps the gesture connected to that title bar even if the pointer moves away from it. Each movement is checked against the desktop bounds so the window stays within reach. The same idea handles resizing from the edges and corners.
-
-The three window controls have distinct jobs: close hides the window, minimize puts it away until an app is selected again, and maximize fills the available workspace. Restore returns to the previous rectangle. The resize control also accepts arrow keys.
-
-The default desktop width is now up to 1180 pixels. That gives the pages enough space to read like an application on a laptop. On smaller screens, the frame fits the viewport, the sidebar becomes an icon rail, and the text returns to one column. Manrope is hosted locally with the site, and the buttons and dock share a neutral palette.
-
-[Read about pointer events ↗](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events)
-
 ## Let the reading room keep its character.
 
 The Reading Room already has its own world: a calendar, book passages, and a softer illustrated style. Putting it inside the desktop should not erase that. It keeps its own design and navigation inside an embedded frame. Journey is the first view when the app opens; the calendar is still available from Home.
