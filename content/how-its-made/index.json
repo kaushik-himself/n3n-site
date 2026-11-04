@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "articles": [
+    {
+      "id": "making-n3n",
+      "title": "Making n3n.lol",
+      "description": "The drawings, neutral glass, and one-window desktop behind my personal website.",
+      "date": "2026-11-03",
+      "path": "src/content/blog/making-n3n.md"
+    }
+  ]
+}
