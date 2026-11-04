@@ -1,0 +1,43 @@
+---
+
+interface Props { title: string; description?: string; redirectTo?: string; publishedTime?: Date; modifiedTime?: Date; }
+const { title, redirectTo, publishedTime, modifiedTime, description = 'Neha Nupoor — writing on technology, systems, and ideas.' } = Astro.props;
+const canonical = redirectTo ?? new URL(Astro.url.pathname, Astro.site);
+const shareImage = new URL('/brand/n3n-og.png', Astro.site);
+const isArticle = !!publishedTime;
+const authorId = 'https://n3n.lol/#person';
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Person', '@id': authorId, name: 'Neha Nupoor', url: 'https://n3n.lol/', sameAs: ['https://github.com/neha-nupoor', 'https://nupoorneha.substack.com/'] },
+    { '@type': 'WebSite', '@id': 'https://n3n.lol/#website', name: 'n3n.lol', url: 'https://n3n.lol/', publisher: { '@id': authorId } },
+    { '@type': isArticle ? 'BlogPosting' : 'WebPage', '@id': String(canonical), url: String(canonical), name: title, description, isPartOf: { '@id': 'https://n3n.lol/#website' },
+      ...(isArticle ? { headline: title.replace(/ — Neha Nupoor$/, ''), author: { '@id': authorId }, image: shareImage.href, mainEntityOfPage: { '@id': String(canonical) }, datePublished: publishedTime?.toISOString(), dateModified: (modifiedTime ?? publishedTime)?.toISOString() } : {}) },
+  ],
+};
+---
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={isArticle ? 'article' : 'website'} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={shareImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="n3n.lol, with Neha’s hand-drawn takeaway coffee cup." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={shareImage} />
+  <link rel="canonical" href={canonical} />
+  {isArticle && <meta property="article:published_time" content={publishedTime?.toISOString()} />}
+  {isArticle && <meta property="article:modified_time" content={(modifiedTime ?? publishedTime)?.toISOString()} />}
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')} />
+  <link rel="icon" type="image/svg+xml" href="/brand/n3n-coffee-icon.svg" />
+  <title>{title}</title>
+  {redirectTo && <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />}
+

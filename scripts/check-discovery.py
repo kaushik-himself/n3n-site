@@ -53,3 +53,17 @@ article_paths={urlparse(url).path for url in urls if urlparse(url).path.startswi
 assert article_paths.issubset(set(index.links)), 'Articles absent from writing index'
 assert not (root/'writing/making-n3n/index.html').exists(), 'Old slug still generated'
 print('PASS sitemap, robots, local index links, initial HTML, canonicals, and structured data')
+
+# Prevent a metadata-only deployment from leaving the old homepage in place.
+desktop_routes={'/':'home','/writing/':'writing','/reading/':'reading','/agents-skills/':'products'}
+desktop_routes.update({path:path.strip('/').split('/')[-1] for path in article_paths})
+for path,view in desktop_routes.items():
+    source=(root/path.lstrip('/')/'index.html').read_text()
+    assert 'id="n3n-desktop"' in source, (path,'Desktop shell absent')
+    assert 'data-initial-view="'+view+'"' in source, (path,'Wrong initial app')
+    assert 'id="n3n-routes"' in source, (path,'Published route map absent')
+    assert '127.0.0.1' not in source, (path,'Preview-only URL in production')
+    assert 'codex-visualization' not in source, (path,'Prototype wrapper in production')
+assert (root/'art-assets/fonts/manrope-latin-400.woff2').exists()
+assert 'https://reading.nehanupoor.com/#journey' in (root/'reading/index.html').read_text()
+print('PASS production desktop, deterministic initial routes, local fonts, and public Reading Room')
