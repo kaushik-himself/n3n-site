@@ -105,23 +105,49 @@ for(const edge of ['n','e','s','w','ne','nw','sw','se']){
  appWindow.append(handle);
 }
 root.querySelector('[data-site-view="reading"]').classList.add('n-reading-stage');
-function sharedLimits(){return {width:stage.clientWidth,height:stage.clientHeight,bottom:stage.clientHeight-(stage.clientWidth<700?98:106)};}
+function sharedLimits(){return {width:stage.clientWidth,height:stage.clientHeight,top:stage.clientWidth<700?64:16,bottom:stage.clientHeight-(stage.clientWidth<700?98:106)};}
 function boundSharedRect(rect){
  const area=sharedLimits(),minW=Math.min(300,area.width-16),minH=Math.min(270,area.bottom-20);
- const width=Math.max(minW,Math.min(area.width-16,rect.width)),height=Math.max(minH,Math.min(area.bottom-16,rect.height));
- return {x:Math.max(8,Math.min(area.width-width-8,rect.x)),y:Math.max(16,Math.min(area.bottom-height,rect.y)),width,height};
+ const width=Math.max(minW,Math.min(area.width-16,rect.width)),height=Math.max(minH,Math.min(area.bottom-area.top,rect.height));
+ return {x:Math.max(8,Math.min(area.width-width-8,rect.x)),y:Math.max(area.top,Math.min(area.bottom-height,rect.y)),width,height};
 }
 function defaultSharedRect(){
- const {width:w,height:h}=sharedLimits(),width=w<700?w-24:Math.min(1180,w-96),y=32;
+ const {width:w,height:h}=sharedLimits(),width=w<700?w-24:Math.min(1180,w-96),y=w<700?64:32;
  return boundSharedRect({x:(w-width)/2,y,width,height:h-y-(w<700?104:112)});
 }
 function applySharedRect(){
  if(!sharedWindow.rect)sharedWindow.rect=defaultSharedRect();
- const area=sharedLimits(),r=sharedWindow.maximized?{x:8,y:16,width:area.width-16,height:area.bottom-16}:boundSharedRect(sharedWindow.rect);
+ const area=sharedLimits(),r=sharedWindow.maximized?{x:8,y:area.top,width:area.width-16,height:area.bottom-area.top}:boundSharedRect(sharedWindow.rect);
  for(const [key,value] of Object.entries(r))appWindow.style.setProperty('--app-'+key,value+'px');
+ layoutDesktopArt(r);
  appWindow.dataset.maximized=String(sharedWindow.maximized);
  appWindow.querySelector('[data-window-action="maximize"]').setAttribute('aria-label',sharedWindow.maximized?'Restore window':'Maximize window');
  fitSharedReading();
+}
+// Fit the wallpaper to the current app, including after a drag or resize.
+// Hide a drawing when no clear margin remains rather than crop a face in half.
+function layoutDesktopArt(rect){
+ const canvas=root.querySelector('.n-sketch-wallpaper');if(!canvas)return;
+ const width=stage.clientWidth,height=stage.clientHeight,mobile=width<700;
+ const left=rect.x,right=width-rect.x-rect.width;
+ function place(selector,visible,x,y,w,h,angle=0){
+  const drawing=canvas.querySelector(selector);if(!drawing)return;
+  drawing.toggleAttribute('hidden',!visible);
+  if(visible)Object.assign(drawing.style,{left:x+'px',right:'auto',top:y+'px',bottom:'auto',width:w+'px',height:h+'px',transform:angle?'rotate('+angle+'deg)':'none'});
+ }
+ const faceWidth=Math.min(142,left-28),faceHeight=faceWidth*1.32;
+ place('[data-doodle="glasses-girl"]',!mobile&&faceWidth>=74,(left-faceWidth)/2,Math.max(72,Math.min(rect.y+65,height-faceHeight-24)),faceWidth,faceHeight);
+ const cupWidth=Math.min(78,right-28);
+ place('[data-doodle="coffee"]',!mobile&&cupWidth>=40,rect.x+rect.width+(right-cupWidth)/2,rect.y+64,cupWidth,cupWidth*1.1);
+ // Cross the glass edge: most of the original ink stays sharp outside it.
+ const pencilLength=Math.min(166,Math.max(0,(right-44)*2/.47));
+ const brushLength=Math.min(174,Math.max(0,(left-40)*2/.85));
+ place('[data-doodle="pencil"]',!mobile&&pencilLength>=110,rect.x+rect.width+22-10*pencilLength/166,rect.y+rect.height*.48-pencilLength/2,20*pencilLength/166,pencilLength,28);
+ place('[data-doodle="paintbrush"]',!mobile&&brushLength>=110,rect.x-24-12*brushLength/174,rect.y+rect.height*.70-brushLength/2,24*brushLength/174,brushLength,-58);
+ const below=height-rect.y-rect.height;
+ place('[data-doodle="pizza"]',!mobile&&below>=82,Math.max(24,rect.x+rect.width*.12),rect.y+rect.height+12,118,60);
+ const cloudWidth=mobile?112:Math.min(145,right-32);
+ place('.n-cloud-pair',mobile||cloudWidth>=72,mobile?(width-cloudWidth)/2:rect.x+rect.width+(right-cloudWidth)/2,mobile?15:rect.y+rect.height-100,cloudWidth,mobile?32:64);
 }
 function fitSharedReading(){
  const viewport=root.querySelector('.n-reading-stage'),frame=root.querySelector('.n-reading-frame'),width=viewport.clientWidth,height=viewport.clientHeight;
@@ -322,6 +348,7 @@ new ResizeObserver(()=>{const next=stage.clientWidth+'x'+stage.clientHeight;if(n
    const cloud=document.createElement('div');cloud.className='n-ambient-cloud one';const image=document.createElement('img');image.className='n-floating-cloud';image.src='/art-assets/neha-cloud-preview.webp';image.alt='';image.width=360;image.height=135;cloud.append(image);canvas.append(cloud);
   }
   artLayer.replaceChildren(canvas);
+  if(sharedWindow.rect)layoutDesktopArt(sharedWindow.rect);
   syncAmbientMotion();
   requestAnimationFrame(()=>{if(artLayer.contains(canvas))sketchInk.forEach(drawInk);});
  }
