@@ -1,8 +1,8 @@
 (()=>{
  const page=document.querySelector('#n3n-desktop .n-products-page');
  const content=page.closest('.n-site-content');
- const base='https://raw.githubusercontent.com/kaushik-himself/n3n-site/refs/heads/codex/github-build-notes/';
- const sourceBase='https://github.com/kaushik-himself/n3n-site/blob/codex/github-build-notes/';
+ const base='https://raw.githubusercontent.com/kaushik-himself/n3n-site/a1560392092bd8656da1d432520d5ef94d33f3bd/';
+ const sourceBase='https://github.com/kaushik-himself/n3n-site/blob/a1560392092bd8656da1d432520d5ef94d33f3bd/';
  const listView=page.querySelector('[data-blog-list-view]');
  const readerView=page.querySelector('[data-blog-reader-view]');
  const list=page.querySelector('[data-blog-list]');
@@ -12,13 +12,13 @@
  const body=page.querySelector('[data-blog-body]');
  const outline=page.querySelector('[data-blog-outline]');
  let entries=null, loading=false, readerVersion=0;
- const articleCache=new Map(),contentVersion=Date.now().toString(36);
+ const articleCache=new Map();
  function el(tag,text,className){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;return node;}
  function external(text,url){const a=el('a',text);a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a;}
  function dateLabel(date){return new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(date+'T12:00:00Z'));}
  async function fetchText(path){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);
-  try{const response=await fetch(base+path+'?v='+contentVersion,{credentials:'omit',cache:'no-cache',signal:controller.signal});if(!response.ok)throw Error('GitHub returned '+response.status);return await response.text();}finally{clearTimeout(timer);}
+  try{const response=await fetch(base+path,{credentials:'omit',cache:'no-cache',signal:controller.signal});if(!response.ok)throw Error('GitHub returned '+response.status);return await response.text();}finally{clearTimeout(timer);}
  }
  function showList(){page.dispatchEvent(new CustomEvent('n3n-page-title',{bubbles:true,detail:{title:'How it’s made',description:'Build notes by Neha Nupoor: the drawings, design, and code behind the things I make.'}}));page.classList.remove('n-blog-reading');readerVersion++;readerView.hidden=true;listView.hidden=false;content.scrollTop=0;loadList();}
  async function loadList(){
