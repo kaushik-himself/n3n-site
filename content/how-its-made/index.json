@@ -3,8 +3,8 @@
   "articles": [
     {
       "id": "making-n3n",
-      "title": "Build a desktop-style personal website",
-      "description": "A tutorial for the app window, neutral glass, sketchbook animations, and embedded pages on n3n.lol.",
+      "title": "Build this site with an AI agent",
+      "description": "An implementation brief for a coding agent, with design constraints, build stages, and acceptance checks.",
       "date": "2026-11-03",
       "path": "src/content/blog/making-n3n.md"
     }

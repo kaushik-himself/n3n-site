@@ -1,157 +1,70 @@
 ---
-title: "Build a desktop-style personal website"
-description: "Build the app window, glass surfaces, sketchbook animations, and embedded pages used on n3n.lol."
+title: "Build this site with an AI agent"
+description: "An implementation brief for a coding agent, with design constraints, build stages, and acceptance checks."
 pubDate: 2026-11-03
 draft: true
 ---
 
-Build the desktop with HTML, CSS, and JavaScript. Use one shared app window for Home, Writing, Reading Room, and Agents & Skills.
+Give your coding agent a brief, your content, and your drawings. Ask it to build and test the site. Review the result in the same browser where you will use it.
 
-The [prototype source](https://github.com/kaushik-himself/n3n-site/tree/codex/github-build-notes/prototypes/desktop) includes a working version. Download it and serve the desktop folder locally:
+The [desktop prototype and source](https://github.com/kaushik-himself/n3n-site/tree/codex/github-build-notes/prototypes/desktop) provide the visual reference. The brief below describes the finished site, including work needed before publishing the prototype.
 
-```sh
-cd prototypes/desktop
-python3 -m http.server 8769 --bind 127.0.0.1
+## Provide the inputs
+
+Give the agent the repository, your name and bio, links to your writing and projects, and the drawings it may use. Mark private material clearly. Supply reference screenshots and state which details matter.
+
+For this site, the main constraints were a white background, neutral grey glass, original sketchbook lines, and one shared app window. Those decisions belong in the brief. The agent can choose the code structure after inspecting the project.
+
+## Give the agent this brief
+
+```text
+Build a personal website with a desktop interface in this repository.
+Use the supplied prototype as the visual reference and the supplied content as the source of facts.
+
+1. Inspect the project.
+Read the repository instructions, routes, content model, build scripts, and deployment configuration. Reuse the existing stack. Identify the changes needed to add the desktop interface without breaking published pages.
+Done when you can name the files to change and the checks to run.
+
+2. Build one app window.
+Add Home, Writing, Reading Room, and Agents & Skills to the sidebar and compact dock. Switch their content inside one shared frame. Preserve the frame's size and position when changing pages. Support dragging, resizing, close, minimize, maximize, and restore. Reopen a hidden app from the dock.
+Done when every control works with pointer and keyboard input and the window stays within the viewport.
+
+3. Apply the visual constraints.
+Use a white desktop, near-black text, and neutral grey surfaces. Keep the reading surface opaque. Make glass visible through its rim, inner highlight, blur, and neutral shadow. Use compact dock icons and give the app most of the available height. Keep body text readable.
+Done when screenshots show no blue or pink tint and the dock does not cover the window.
+
+4. Use the supplied drawings.
+Isolate the original ink and preserve its line quality. Reveal the artwork with SVG masks. Overlap groups of strokes so detailed drawings finish promptly while individual strokes stay slow. Check intermediate frames around the glasses and other dense areas.
+Cycle the Home illustration inside one fixed frame. Reset inherited position and transform styles for every drawing. Give cloned SVG masks unique IDs. Include pause and reduced-motion support. Keep ambient clouds away from text.
+Done when every drawing stays inside its intended area throughout the animation and the final image matches the supplied artwork.
+
+5. Connect the content.
+Use real content and verified links. Read a skill's README before describing it. Show build notes as a list that opens an article inside the shared window. Open Reading Room at Journey and make its iframe fill the content area. Keep the terminal out of this version.
+For publication, give each public page and article a stable URL, a normal link, and readable HTML in its initial response. Use GitHub as an authoring source; build published content into the site. Treat click-triggered GitHub fetching as a preview convenience.
+Done when direct links, browser history, page reloads, and in-app navigation reach the same content.
+
+6. Verify the result.
+Check desktop, laptop, and phone widths, including the user's normal browser pane. Measure overflow, app bounds, dock clearance, drawing positions, and iframe width. Test focus, keyboard controls, pause, and reduced motion.
+Check titles, descriptions, canonicals, social images, crawl directives, and discovery links. Compare declared metadata with the visible content. Report indexing and answer-engine visibility as unverified unless you have evidence from the relevant tools.
+Done when you have screenshots and check results for the actual implementation, with any remaining limits stated.
+
+Deliver the working preview, a short change summary, and the verification evidence. Preserve the scoped source and optimized assets in Git and open a draft pull request. Keep production publishing as a separate step.
 ```
 
-Open `http://127.0.0.1:8769/index.html`. To build your own version, follow these steps.
+## Review the result with specific corrections
 
-## 1. Create the desktop layout
+Review a screenshot or the running site. Name the element, the fault, and the expected result. Give the agent one observable target per correction.
 
-Use three layers: a background, an app window, and a dock. Keep the dock outside the window so it stays available when the window closes.
-
-```html
-<div class="desktop">
-  <div class="background" aria-hidden="true"></div>
-  <section class="app-window" aria-label="Personal website">
-    <header class="titlebar">n3n.lol</header>
-    <div class="app-layout">
-      <aside class="sidebar" aria-label="Site navigation"></aside>
-      <main class="app-content"></main>
-    </div>
-  </section>
-  <nav class="dock" aria-label="Website apps"></nav>
-</div>
+```text
+The Reading Room leaves empty space on the right. Measure its container and iframe. Make the frame fill the available width. Verify the result at desktop and phone widths.
 ```
 
-Make the desktop fill the viewport. Use a two-column grid inside the app: a fixed-width sidebar and a flexible content area. Give the content area `min-width: 0` and `overflow: auto` so long pages scroll inside the window.
-
-Start with an app width of `min(1180px, calc(100vw - 96px))`. Reduce the outside margin on small screens. Reserve space below the window for the dock.
-
-## 2. Keep navigation inside one window
-
-Put each page in a section with a `data-view` attribute. Give sidebar and dock buttons a matching `data-page` value. Show the selected section and hide the others.
-
-```js
-const pages = document.querySelectorAll('[data-view]');
-const buttons = document.querySelectorAll('[data-page]');
-
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    const selected = button.dataset.page;
-    pages.forEach(page => {
-      page.hidden = page.dataset.view !== selected;
-    });
-    buttons.forEach(item => {
-      item.setAttribute('aria-pressed', String(item.dataset.page === selected));
-    });
-  });
-});
+```text
+The next doodle moves over the heading. Keep every rotating drawing inside the same frame. Verify each drawing's position after the transition, including the pizza and coffee.
 ```
 
-Keep the window's position and size separate from the selected page. Changing pages should not move the window.
-
-Use Pointer Events for dragging and resizing. Record the starting pointer position and window rectangle. On each move, calculate the new rectangle and clamp it inside the desktop. Call `setPointerCapture()` on the active handle so the gesture continues when the pointer leaves it. Ignore title-bar buttons when starting a drag.
-
-Close hides the window. Minimize hides it until a dock app is selected. Maximize fills the available area; restore returns to the saved rectangle. Keep the dock buttons available in every state.
-
-## 3. Add neutral glass surfaces
-
-Keep the desktop white and the reading area opaque. Apply glass to the title bar, sidebar, and dock. Blur alone has little effect against white, so add a bright inner edge, a light grey rim, and a soft neutral shadow.
-
-```css
-.glass {
-  background: rgb(239 239 239 / 55%);
-  border: 1px solid rgb(255 255 255 / 85%);
-  backdrop-filter: grayscale(1) blur(24px);
-  box-shadow:
-    inset 0 1px 0 white,
-    inset 0 -1px 0 rgb(0 0 0 / 8%),
-    0 12px 30px rgb(0 0 0 / 10%);
-}
+```text
+The glass looks tinted. Keep the background white and use neutral greys for the surfaces and shadows. Show the result in the browser pane I am using.
 ```
 
-Use equal red, green, and blue values for neutral greys. Keep coloured glows out of the shadows.
-
-Use a readable font and host its files locally. This site uses Manrope. Include the font's licence with the files. For reduced transparency or increased contrast, replace the translucent surfaces with solid ones.
-
-## 4. Prepare and animate the drawings
-
-Photograph or scan the sketchbook page. Crop each drawing, remove the paper background, and export the ink as an SVG or transparent image. Keep the original marks; automatic smoothing can change their character.
-
-For a drawn-on effect, place a mask over the finished artwork. Animate white strokes inside the mask with `stroke-dasharray` and `stroke-dashoffset`. The mask reveals the drawing while the original ink supplies the visible lines.
-
-```css
-.reveal-stroke {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 2s linear forwards;
-}
-
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
-}
-```
-
-Set `pathLength="1"` on each reveal path. Adjust its width to cover the ink beneath it. Group nearby strokes and overlap their start times. This keeps individual strokes slow without making a detailed drawing take too long to finish. Check intermediate frames, especially around eyes and glasses.
-
-For the rotating Home illustration, use a fixed-size frame. Reset each drawing's position and transform before inserting it. Fit the SVG inside the frame with `preserveAspectRatio="xMidYMid meet"`. Give cloned SVG masks unique IDs so they do not affect another drawing.
-
-This site changes drawings every 6.5 seconds. It includes a pause button and stops automatic changes when reduced motion is requested or the page is hidden.
-
-## 5. Load build notes from GitHub
-
-Store articles as Markdown. Keep a JSON index with each article's title, summary, date, and file path. Fetch the index to build the blog list. Fetch the selected article when its link is clicked.
-
-Render the article inside the existing app window. Add a back link to the list. Generate the article outline from its headings.
-
-Use text nodes for article content and an explicit set of supported Markdown elements. Treat raw HTML as text. Allow only expected article paths and safe link URLs. Add loading, error, and retry states. Public GitHub content does not need a token in the browser.
-
-Keep a draft article out of the published writing collection until it is ready. The prototype can still load that draft from its review branch.
-
-## 6. Embed the Reading Room
-
-Put the Reading Room in an iframe. Set its initial URL to `https://reading.nehanupoor.com/#journey` so it opens Journey. Keep its own navigation and design inside the frame.
-
-The embedded page must use the full app content area. Remove any width limit inherited from text pages, along with the parent's reading padding.
-
-```css
-.app-content.is-embedded {
-  padding: 0;
-}
-
-.app-content.is-embedded .embedded-page {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-}
-
-.embedded-page iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-```
-
-If the embedded site has an unsuitable middle breakpoint, render it at a known layout width and scale it to fit. Recalculate the frame dimensions with `ResizeObserver` when the app window changes size.
-
-## 7. Test the layout and metadata
-
-Check a wide desktop, a small laptop, and a narrow phone view. Resize and drag the app. Open every page. Use the controls with a keyboard.
-
-Check that the dock fits on screen, drawings stay out of the text, and embedded pages fill their container. Make the Home page fit where practical. Let long articles and reading lists scroll.
-
-Give each page a browser title. Add a favicon and Open Graph image. This site uses the takeaway coffee doodle for both, with a 1200 × 630 PNG for the share image and an SVG for the favicon.
-
-Commit the source and optimized assets to Git. Review the result in a preview before publishing it.
+Ask for proof after each fix. A screenshot can confirm appearance; it cannot prove that a button, route, or keyboard interaction works. Have the agent test those actions and report the result.

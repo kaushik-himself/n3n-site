@@ -1,0 +1,99 @@
+{
+  "checkedDate": "2026-11-03",
+  "timezone": "America/Los_Angeles",
+  "method": "Fresh Firecrawl markdown/rawHtml/links; independent HTTP GET checks; local source inspection",
+  "pages": [
+    {
+      "requested": "https://n3n.lol/",
+      "finalUrl": "https://n3n.lol/",
+      "status": 200,
+      "title": "Neha Nupoor — reading, writing, building",
+      "description": "Neha Nupoor — writing on technology, systems, and ideas.",
+      "robots": null,
+      "head": "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<meta name=\"description\" content=\"Neha Nupoor — writing on technology, systems, and ideas.\">\n<meta name=\"theme-color\" content=\"#f6f2e9\">\n<meta property=\"og:title\" content=\"Neha Nupoor — reading, writing, building\">\n<meta property=\"og:description\" content=\"Neha Nupoor — writing on technology, systems, and ideas.\">\n<meta property=\"og:type\" content=\"website\">\n<meta property=\"og:url\" content=\"https://n3n.lol/\">\n<link rel=\"canonical\" href=\"https://n3n.lol/\">\n<title>Neha Nupoor — reading, writing, building</title>",
+      "structuredData": false,
+      "links": [
+        "https://n3n.lol/#main",
+        "https://n3n.lol/",
+        "https://nupoorneha.substack.com/",
+        "https://reading.nehanupoor.com/",
+        "https://n3n.lol/writing/hello-world/",
+        "https://n3n.lol/privacy/",
+        "https://n3n.lol/terms/"
+      ]
+    },
+    {
+      "requested": "https://n3n.lol/writing/hello-world/",
+      "finalUrl": "https://n3n.lol/writing/hello-world/",
+      "status": 200,
+      "title": "Hello, World — Neha Nupoor",
+      "description": "A first note on n3n.",
+      "robots": null,
+      "head": "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<meta name=\"description\" content=\"A first note on n3n.\">\n<meta name=\"theme-color\" content=\"#f6f2e9\">\n<meta property=\"og:title\" content=\"Hello, World — Neha Nupoor\">\n<meta property=\"og:description\" content=\"A first note on n3n.\">\n<meta property=\"og:type\" content=\"article\">\n<meta property=\"og:url\" content=\"https://n3n.lol/writing/hello-world/\">\n<link rel=\"canonical\" href=\"https://n3n.lol/writing/hello-world/\">\n<title>Hello, World — Neha Nupoor</title>",
+      "structuredData": false,
+      "links": [
+        "https://n3n.lol/writing/hello-world/#main",
+        "https://n3n.lol/",
+        "https://nupoorneha.substack.com/",
+        "https://reading.nehanupoor.com/",
+        "https://n3n.lol/writing/",
+        "https://n3n.lol/privacy/",
+        "https://n3n.lol/terms/"
+      ]
+    },
+    {
+      "requested": "https://n3n.lol/writing/",
+      "finalUrl": "https://nupoorneha.substack.com/",
+      "status": 200,
+      "title": "Nupoor Neha | Substack",
+      "description": "My personal Substack. Click to read Nupoor Neha, by Neha Nupoor, a Substack publication. Launched 9 months ago.",
+      "robots": "noindex",
+      "head": "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<meta name=\"norton-safeweb-site-verification\" content=\"24usqpep0ejc5w6hod3dulxwciwp0djs6c6ufp96av3t4whuxovj72wfkdjxu82yacb7430qjm8adbd5ezlt4592dq4zrvadcn9j9n-0btgdzpiojfzno16-fnsnu7xd\">\n<title>Nupoor Neha | Substack</title>\n<meta data-rh=\"true\" property=\"og:type\" content=\"article\">\n<meta data-rh=\"true\" property=\"og:title\" content=\"Nupoor Neha | Substack\">\n<meta data-rh=\"true\" name=\"twitter:title\" content=\"Nupoor Neha | Substack\">\n<meta data-rh=\"true\" name=\"description\" content=\"My personal Substack. Click to read Nupoor Neha, by Neha Nupoor, a Substack publication. Launched 9 months ago.\">\n<meta data-rh=\"true\" property=\"og:description\" content=\"My personal Substack. Click to read Nupoor Neha, by Neha Nupoor, a Substack publication. Launched 9 months ago.\">\n<meta data-rh=\"true\" name=\"twitter:description\" content=\"My personal Substack. Click to read Nupoor Neha, by Neha Nupoor, a Substack publication. Launched 9 months ago.\">\n<meta data-rh=\"true\" property=\"og:image\" content=\"https://substackcdn.com/image/fetch/$s_!K1fo!,w_400,h_400,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F109f35ba-c65e-45b9-9d0b-291149f4ec2a_144x144.png\">\n<meta data-rh=\"true\" name=\"twitter:image\" content=\"https://substackcdn.com/image/fetch/$s_!K1fo!,w_400,h_400,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F109f35ba-c65e-45b9-9d0b-291149f4ec2a_144x144.png\">\n<meta data-rh=\"true\" name=\"twitter:card\" content=\"summary\">\n<meta name=\"robots\" content=\"noindex\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover\">\n<meta name=\"author\" content=\"Neha Nupoor\">\n<meta property=\"og:url\" content=\"https://nupoorneha.substack.com/\">\n<link rel=\"canonical\" href=\"https://nupoorneha.substack.com/\">",
+      "structuredData": true,
+      "links": [
+        "https://substack.com/tos",
+        "https://substack.com/ccpa#personal-data-collected",
+        "https://substack.com/privacy",
+        "https://nupoorneha.substack.com/",
+        "https://nupoorneha.substack.com/notes",
+        "https://nupoorneha.substack.com/archive",
+        "https://nupoorneha.substack.com/about",
+        "https://nupoorneha.substack.com/p/coming-soon",
+        "https://substack.com/@nupoorneha",
+        "https://substack.com/signup?utm_source=substack&utm_medium=web&utm_content=footer",
+        "https://substack.com/app/app-store-redirect?utm_campaign=app-marketing&utm_content=web-footer-button",
+        "https://substack.com/"
+      ]
+    },
+    {
+      "requested": "https://reading.nehanupoor.com/",
+      "finalUrl": "https://reading.nehanupoor.com/#home",
+      "status": 200,
+      "title": "The Reading Room Project",
+      "description": null,
+      "robots": "noindex, nofollow",
+      "head": "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<meta name=\"robots\" content=\"noindex, nofollow\">\n<title>The Reading Room Project</title>",
+      "structuredData": false,
+      "links": []
+    }
+  ],
+  "httpChecks": {
+    "n3nRobots": 404,
+    "n3nSitemap": 404,
+    "n3nSitemapIndex": 404,
+    "readingRobots": {
+      "status": 200,
+      "contentType": "text/html",
+      "result": "SPA HTML fallback, not a robots policy file"
+    },
+    "readingInitialBody": "Empty div#root; rendered content requires JavaScript",
+    "substackDirectRobots": "noindex"
+  },
+  "notMeasured": [
+    "Search Console indexing",
+    "Search engine rankings",
+    "Answer-engine citations",
+    "Crawler access from verified bot IPs",
+    "Core Web Vitals"
+  ]
+}
