@@ -1,14 +1,4 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-const posts = (await getCollection('blog')).filter(post => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const formatDate = (date: Date) => date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+import DesktopLayout from '../../layouts/DesktopLayout.astro';
 ---
-<Layout title="Writing — Neha Nupoor" description="Articles by Neha Nupoor on building software, working with AI agents, and the ideas behind her projects.">
-  <section class="writing-section writing-index" aria-labelledby="writing-title">
-    <div class="section-heading"><div><p class="eyebrow">Articles by Neha Nupoor</p><h1 id="writing-title">Writing</h1></div><a class="text-link" href="https://nupoorneha.substack.com/">Also on Substack ↗</a></div>
-    <p class="writing-intro">Notes on software, AI agents, and the things I make.</p>
-    <div class="post-list">{posts.map(post => <a class="post-row" href={'/writing/' + post.slug + '/'}><div><h2>{post.data.title}</h2>{post.data.description && <p>{post.data.description}</p>}</div><div class="post-date"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><span aria-hidden="true">→</span></div></a>)}</div>
-  </section>
-</Layout>
+<DesktopLayout view="writing"/>

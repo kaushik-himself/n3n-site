@@ -1,0 +1,59 @@
+---
+import SiteHead from '../components/SiteHead.astro';
+import '../styles/desktop.css';
+import shell from '../components/desktop/shell.html?raw';
+import home from '../components/desktop/home.html?raw';
+import products from '../components/desktop/products.html?raw';
+import reading from '../components/desktop/reading.html?raw';
+import { getCollection } from 'astro:content';
+interface Props { view?: string }
+const {view='home'}=Astro.props;
+const posts=(await getCollection('blog')).filter(post=>!post.data.draft).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
+const rendered=await Promise.all(posts.map(async post=>({post,Content:(await post.render()).Content})));
+const routes:Record<string,{label:string,title:string,description:string,path:string,published?:string,modified?:string}>={
+ home:{label:'Home',title:'Neha Nupoor — art, books, and software',description:'Neha Nupoor is an artist, reader, and software maker. Explore her drawings, writing, Reading Room, and open-source agent skills.',path:'/'},
+ writing:{label:'Writing',title:'Writing — Neha Nupoor',description:'Notes on technology, systems, and building software by Neha Nupoor.',path:'/writing/'},
+ reading:{label:'Reading room',title:'Reading Room — Neha Nupoor',description:'Explore Neha Nupoor’s books, highlights, and reading journey in the Reading Room.',path:'/reading/'},
+ products:{label:'Agents & Skills',title:'Agents & Skills — Neha Nupoor',description:'Open-source agent skills and build notes by Neha Nupoor, starting with Dynamic Visual Reply.',path:'/agents-skills/'}
+};
+for(const {post} of rendered)routes[post.slug]={label:post.data.title,title:post.data.title+' — Neha Nupoor',description:post.data.description||post.data.title,path:'/writing/'+post.slug+'/',published:post.data.pubDate.toISOString(),modified:(post.data.updatedDate??post.data.pubDate).toISOString()};
+const route=routes[view]??routes.home;
+const escape=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
+const date=(d:Date)=>d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'});
+const blogList=posts.filter(post=>post.slug==='build-with-an-ai-agent').map(post=>`<div class="n-blog-row" role="listitem"><a class="n-blog-open" data-site-page="${escape(post.slug)}" href="/writing/${escape(post.slug)}/"><time class="n-blog-date" datetime="${post.data.pubDate.toISOString()}">${date(post.data.pubDate)}</time><h3><span class="n-blog-link-title">${escape(post.data.title)}</span><span class="n-blog-link-arrow" aria-hidden="true">→</span></h3><p>${escape(post.data.description||'')}</p></a></div>`).join('');
+function page(source:string,key:string){
+ source=source.replace(/\shidden=""/,'');
+ if(view!==key)source=source.replace('<section ','<section hidden ');
+ else source=source.replace('<h2 class="n-page-heading">','<h1 class="n-page-heading">').replace(/(<h1 class="n-page-heading">[\s\S]*?)<\/h2>/,'$1</h1>');
+ return source;
+}
+let markup=shell.replace('id="n3n-desktop"',`id="n3n-desktop" data-initial-view="${escape(view)}"`).replace('class="n-window n-about"','class="n-window n-about n-app-window"');
+const [before,after]=markup.split('N3N_CONTENT_SLOT');
+---
+<!DOCTYPE html><html lang="en"><head><SiteHead title={route.title} description={route.description} publishedTime={route.published?new Date(route.published):undefined} modifiedTime={route.modified?new Date(route.modified):undefined}/><link rel="preload" href="/art-assets/fonts/manrope-latin-400.woff2" as="font" type="font/woff2" crossorigin/></head><body>
+<a class="skip-link" href="#main">Skip to content</a>
+<Fragment set:html={before}/>
+<Fragment set:html={page(home,'home')}/>
+<section class="n-site-page" data-site-view="writing" hidden={view!=='writing'} aria-label="Writing">
+ <div class="n-page-location">n3n.lol <span>/</span> Writing</div><p class="n-eyebrow">Notes &amp; essays</p>
+ {view==='writing'?<h1 class="n-page-heading">A little writing.</h1>:<h2 class="n-page-heading">A little writing.</h2>}
+ <p class="n-page-intro">Technology, systems, and ideas.</p><a class="n-inline-link n-substack-link" href="https://nupoorneha.substack.com/" target="_blank" rel="noopener noreferrer">Read on Substack ↗</a>
+ <div class="n-writing-list">{posts.map((post,index)=><a class="n-post-row" data-site-page={post.slug} href={'/writing/'+post.slug+'/'}><span class="n-post-number">{String(index+1).padStart(2,'0')}</span><span><strong>{post.data.title}</strong><small>{post.data.description}</small></span><span class="n-post-meta">{date(post.data.pubDate)} <span aria-hidden="true">→</span></span></a>)}</div>
+</section>
+<Fragment set:html={page(products.replace('N3N_BLOG_LIST',blogList),'products')}/>
+<Fragment set:html={page(reading,'reading')}/>
+{rendered.map(({post,Content})=><article class="n-site-page n-article-page" data-site-view={post.slug} hidden={view!==post.slug} aria-label={post.data.title}>
+ <a class="n-back-writing" data-site-page="writing" href="/writing/">← All writing</a><p class="n-eyebrow">{post.slug==='build-with-an-ai-agent'?'How it’s made':'Notes & essays'}</p>
+ {view===post.slug?<h1 class="n-page-heading">{post.data.title}</h1>:<h2 class="n-page-heading">{post.data.title}</h2>}
+ <p class="n-byline">Neha Nupoor · <time datetime={post.data.pubDate.toISOString()}>{date(post.data.pubDate)}</time></p>
+ <div class="n-article-body"><Content/></div>
+ <div class="n-article-end"><a data-site-page="writing" href="/writing/">← All writing</a></div>
+</article>)}
+<Fragment set:html={after}/>
+<script id="n3n-routes" type="application/json" set:html={JSON.stringify(routes).replace(/</g,'\\u003c')}/>
+<script>
+ import '../scripts/desktop.js';
+ import '../scripts/desktop-tabs.js';
+</script>
+<noscript><style>#n3n-desktop .n-about{left:12px!important;top:16px!important;width:calc(100% - 24px)!important;height:calc(100dvh - 120px)!important}#n3n-desktop .n-background-drawing{opacity:.6}#n3n-desktop .n-ink-finish{opacity:1!important}#n3n-desktop .n-site-dock{display:none}#n3n-desktop .n-reading-frame{display:none}#n3n-desktop .n-reading-fallback{position:static}#n3n-desktop [data-agents-panel="making"]{display:block!important}</style></noscript>
+</body></html>

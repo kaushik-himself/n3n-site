@@ -1,15 +1,7 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import DesktopLayout from '../../layouts/DesktopLayout.astro';
 import { getCollection } from 'astro:content';
-export async function getStaticPaths(){return (await getCollection('blog')).filter(post=>!post.data.draft).map(post=>({params:{slug:post.slug},props:{post}}));}
-const {post}=Astro.props;
-const {Content}=await post.render();
+export async function getStaticPaths(){return (await getCollection('blog')).filter(post=>!post.data.draft).map(post=>({params:{slug:post.slug},props:{view:post.slug}}));}
+const {view}=Astro.props;
 ---
-<Layout title={`${post.data.title} — Neha Nupoor`} description={post.data.description} publishedTime={post.data.pubDate} modifiedTime={post.data.updatedDate}>
-  <article class="article">
-    <a class="text-link back-link" href="/writing/">← All writing</a>
-    <header class="article-header"><p class="eyebrow">Writing</p><h1>{post.data.title}</h1><p class="article-meta">Neha Nupoor <span aria-hidden="true">·</span> <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'})}</time></p></header>
-    <div class="prose"><Content /></div>
-    <footer class="article-end"><span aria-hidden="true">✳</span><p>More passages, more notes.</p><a class="text-link" href="https://reading.nehanupoor.com/">Visit the reading room ↗</a></footer>
-  </article>
-</Layout>
+<DesktopLayout view={view}/>
