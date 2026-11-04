@@ -68,3 +68,13 @@
  #n3n-desktop .n-window.n-app-window,#n3n-desktop .n-app-window .n-site-sidebar{background:#efefef}
  #n3n-desktop .n-app-window .n-titlebar,#n3n-desktop .n-site-dock{background:#fafafa}
 }
+
+/* Feed controls use the existing neutral Writing style. */
+#n3n-desktop .n-writing-actions{display:flex;align-items:center;flex-wrap:wrap;gap:16px}
+#n3n-desktop .n-refresh-posts{font:inherit;font-size:11px;background:transparent;border:1px solid #ddd;border-radius:7px;padding:6px 10px;color:#555;cursor:pointer}
+#n3n-desktop .n-refresh-posts:hover{background:#f3f3f3}
+#n3n-desktop .n-refresh-posts:focus-visible{outline:2px solid #555;outline-offset:2px}
+#n3n-desktop .n-refresh-posts:disabled{opacity:.5;cursor:wait}
+#n3n-desktop .n-feed-status{font-size:11px;color:#666;min-height:16px;margin:8px 0 0}
+#n3n-desktop .n-post-row>span:nth-child(2){min-width:0}
+#n3n-desktop .n-post-meta{flex-wrap:wrap;white-space:normal}

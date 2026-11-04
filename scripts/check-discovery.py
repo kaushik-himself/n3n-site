@@ -52,6 +52,15 @@ index=Page();index.feed((root/'writing/index.html').read_text())
 article_paths={urlparse(url).path for url in urls if urlparse(url).path.startswith('/writing/') and urlparse(url).path!='/writing/'}
 assert article_paths.issubset(set(index.links)), 'Articles absent from writing index'
 assert not (root/'writing/making-n3n/index.html').exists(), 'Old slug still generated'
+assert not (root/'writing/hello-world/index.html').exists(), 'Deleted article still generated'
+assert not any('hello-world' in url for url in urls + index.links), 'Deleted article still linked'
+assert 'Hello, World' not in (root/'writing/index.html').read_text(), 'Deleted article still in Writing'
+snapshot=json.loads(Path('src/generated/substack.json').read_text())
+assert snapshot, 'Substack snapshot empty'
+for post in snapshot:
+    assert post['url'] in index.links, ('Substack post absent from initial HTML',post['title'])
+    assert post['url'] not in urls, 'External post in local sitemap'
+print('PASS Substack posts in initial HTML and Hello, World removed')
 print('PASS sitemap, robots, local index links, initial HTML, canonicals, and structured data')
 
 # Prevent a metadata-only deployment from leaving the old homepage in place.

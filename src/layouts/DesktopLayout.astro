@@ -7,10 +7,12 @@ import home from '../components/desktop/home.html?raw';
 import products from '../components/desktop/products.html?raw';
 import reading from '../components/desktop/reading.html?raw';
 import { getCollection } from 'astro:content';
+import substack from '../generated/substack.json';
 interface Props { view?: string }
 const {view='home'}=Astro.props;
 const posts=(await getCollection('blog')).filter(post=>!post.data.draft).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
 const rendered=await Promise.all(posts.map(async post=>({post,Content:(await post.render()).Content})));
+const writingPosts=[...posts.map(post=>({title:post.data.title,description:post.data.description,url:'/writing/'+post.slug+'/',published:post.data.pubDate.toISOString(),slug:post.slug})),...substack.map(post=>({...post,slug:null}))].sort((a,b)=>Date.parse(b.published)-Date.parse(a.published));
 const routes:Record<string,{label:string,title:string,description:string,path:string,published?:string,modified?:string}>={
  home:{label:'Home',title:'Neha Nupoor — art, books, and software',description:'Neha Nupoor is an artist, reader, and software maker. Explore her drawings, writing, Reading Room, and open-source agent skills.',path:'/'},
  writing:{label:'Writing',title:'Writing — Neha Nupoor',description:'Notes on technology, systems, and building software by Neha Nupoor.',path:'/writing/'},
@@ -38,8 +40,10 @@ const [before,after]=markup.split('N3N_CONTENT_SLOT');
 <section class="n-site-page" data-site-view="writing" hidden={view!=='writing'} aria-label="Writing">
  <div class="n-page-location">n3n.lol <span>/</span> Writing</div><p class="n-eyebrow">Notes &amp; essays</p>
  {view==='writing'?<h1 class="n-page-heading">A little writing.</h1>:<h2 class="n-page-heading">A little writing.</h2>}
- <p class="n-page-intro">Technology, systems, and ideas.</p><a class="n-inline-link n-substack-link" href="https://nupoorneha.substack.com/" target="_blank" rel="noopener noreferrer">Read on Substack ↗</a>
- <div class="n-writing-list">{posts.map((post,index)=><a class="n-post-row" data-site-page={post.slug} href={'/writing/'+post.slug+'/'}><span class="n-post-number">{String(index+1).padStart(2,'0')}</span><span><strong>{post.data.title}</strong><small>{post.data.description}</small></span><span class="n-post-meta">{date(post.data.pubDate)} <span aria-hidden="true">→</span></span></a>)}</div>
+ <p class="n-page-intro">Technology, systems, and ideas.</p>
+ <div class="n-writing-actions"><a class="n-inline-link n-substack-link" href="https://nupoorneha.substack.com/" target="_blank" rel="noopener noreferrer">Read on Substack ↗</a><button class="n-refresh-posts" type="button">Refresh posts</button></div>
+ <p class="n-feed-status" role="status" aria-live="polite"></p>
+ <div class="n-writing-list">{writingPosts.map((post,index)=><a class="n-post-row" data-site-page={post.slug??undefined} data-local-post={post.slug?'':undefined} data-substack-post={!post.slug?'':undefined} data-post-date={post.published} href={post.url} target={!post.slug?'_blank':undefined} rel={!post.slug?'noopener noreferrer':undefined}><span class="n-post-number">{String(index+1).padStart(2,'0')}</span><span><strong>{post.title}</strong><small>{post.description}</small></span><span class="n-post-meta"><time datetime={post.published}>{date(new Date(post.published))}</time>{!post.slug?' · Substack ':''}<span aria-hidden="true">{post.slug?'→':'↗'}</span></span></a>)}</div>
 </section>
 <Fragment set:html={page(products.replace('N3N_BLOG_LIST',blogList),'products')}/>
 <Fragment set:html={page(reading,'reading')}/>
@@ -55,6 +59,7 @@ const [before,after]=markup.split('N3N_CONTENT_SLOT');
 <script>
  import '../scripts/desktop.js';
  import '../scripts/desktop-tabs.js';
+ import '../scripts/substack.js';
 </script>
-<noscript><style>#n3n-desktop .n-about{left:12px!important;top:16px!important;width:calc(100% - 24px)!important;height:calc(100dvh - 120px)!important}#n3n-desktop .n-background-drawing{opacity:.6}#n3n-desktop .n-ink-finish{opacity:1!important}#n3n-desktop .n-site-dock{display:none}#n3n-desktop .n-reading-frame{display:none}#n3n-desktop .n-reading-fallback{position:static}#n3n-desktop [data-agents-panel="making"]{display:block!important}</style></noscript>
+<noscript><style>.n-writing-actions .n-refresh-posts{display:none}#n3n-desktop .n-about{left:12px!important;top:16px!important;width:calc(100% - 24px)!important;height:calc(100dvh - 120px)!important}#n3n-desktop .n-background-drawing{opacity:.6}#n3n-desktop .n-ink-finish{opacity:1!important}#n3n-desktop .n-site-dock{display:none}#n3n-desktop .n-reading-frame{display:none}#n3n-desktop .n-reading-fallback{position:static}#n3n-desktop [data-agents-panel="making"]{display:block!important}</style></noscript>
 </body></html>
