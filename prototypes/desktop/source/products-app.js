@@ -1,8 +1,8 @@
 (()=>{
  const page=document.querySelector('#n3n-desktop .n-products-page');
  const content=page.closest('.n-site-content');
- const base='https://raw.githubusercontent.com/kaushik-himself/n3n-site/09e0f5e517d65b96ba42b8ac9f5655c3a874a727/';
- const sourceBase='https://github.com/kaushik-himself/n3n-site/blob/09e0f5e517d65b96ba42b8ac9f5655c3a874a727/';
+ const base='https://raw.githubusercontent.com/kaushik-himself/n3n-site/fd63ac8c2fe64324743bdbd645c2cfc84eeccfe4/';
+ const sourceBase='https://github.com/kaushik-himself/n3n-site/blob/fd63ac8c2fe64324743bdbd645c2cfc84eeccfe4/';
  const listView=page.querySelector('[data-blog-list-view]');
  const readerView=page.querySelector('[data-blog-reader-view]');
  const list=page.querySelector('[data-blog-list]');
@@ -15,6 +15,7 @@
  const articleCache=new Map();
  function el(tag,text,className){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;return node;}
  function external(text,url){const a=el('a',text);a.href=url;a.target='_blank';a.rel='noopener noreferrer';return a;}
+ function publishedArticle(item){return typeof item.url==='string'&&/^https:\/\/n3n\.lol\/writing\/[a-z0-9-]+\/$/.test(item.url)?item.url:null;}
  function dateLabel(date){return new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(date+'T12:00:00Z'));}
  async function fetchText(path){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);
@@ -30,7 +31,7 @@
    list.replaceChildren();
    entries.forEach(item=>{
     const row=el('div',undefined,'n-blog-row');row.setAttribute('role','listitem');
-    const link=el('a',undefined,'n-blog-open');link.href='#build-note-'+item.path.split('/').pop().replace('.md','');link.setAttribute('aria-label','Read article: '+item.title);
+    const link=el('a',undefined,'n-blog-open');link.href=publishedArticle(item)||'#build-note-'+item.path.split('/').pop().replace('.md','');link.setAttribute('aria-label','Read article: '+item.title);
     const date=el('time',dateLabel(item.date),'n-blog-date');date.dateTime=item.date;
     const title=el('h3');title.append(el('span',item.title,'n-blog-link-title'));
     const arrow=el('span','→','n-blog-link-arrow');arrow.setAttribute('aria-hidden','true');title.append(arrow);
@@ -68,7 +69,7 @@
   page.dispatchEvent(new CustomEvent('n3n-page-title',{bubbles:true,detail:{title:item.title,description:item.description,article:true}}));const version=++readerVersion;page.classList.add('n-blog-reading');listView.hidden=true;readerView.hidden=false;content.scrollTop=0;page.querySelector('[data-blog-back]').focus({preventScroll:true});
   const title=el('h2',item.title);title.id='n-github-article-title';
   const date=el('time',dateLabel(item.date));date.dateTime=item.date;
-  const meta=el('p',undefined,'n-blog-meta');meta.append(date,document.createTextNode(' · '),external('Source on GitHub ↗',sourceBase+item.path));
+  const meta=el('p',undefined,'n-blog-meta');meta.append(date,document.createTextNode(' · '),external('Source on GitHub ↗',sourceBase+item.path));if(publishedArticle(item))meta.append(document.createTextNode(' · '),external('Open article ↗',publishedArticle(item)));
   header.replaceChildren(el('p','How it’s made','n-eyebrow'),title,el('p',item.description,'n-article-deck'),meta);
   outline.hidden=true;body.replaceChildren(el('p','Loading the article from GitHub…'));body.removeAttribute('data-source');
   try{

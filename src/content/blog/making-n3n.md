@@ -8,7 +8,7 @@ draft: false
 
 Give your coding agent a brief, your content, and your drawings. Ask it to build and test the site. Review the result in the same browser where you will use it.
 
-The [desktop prototype and source](https://github.com/kaushik-himself/n3n-site/tree/codex/github-build-notes/prototypes/desktop) provide the visual reference. The brief below describes the finished site, including work needed before publishing the prototype.
+The [desktop prototype and source](https://github.com/kaushik-himself/n3n-site/tree/main/prototypes/desktop) provide the visual reference. The brief below describes the finished site, including work needed before publishing the prototype.
 
 ## Provide the inputs
 

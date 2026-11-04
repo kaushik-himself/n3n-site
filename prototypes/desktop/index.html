@@ -3334,8 +3334,8 @@ new ResizeObserver(()=&gt;{const next=stage.clientWidth+&#x27;x&#x27;+stage.clie
 (()=&gt;{
  const page=document.querySelector(&#x27;#n3n-desktop .n-products-page&#x27;);
  const content=page.closest(&#x27;.n-site-content&#x27;);
- const base=&#x27;https://raw.githubusercontent.com/kaushik-himself/n3n-site/09e0f5e517d65b96ba42b8ac9f5655c3a874a727/&#x27;;
- const sourceBase=&#x27;https://github.com/kaushik-himself/n3n-site/blob/09e0f5e517d65b96ba42b8ac9f5655c3a874a727/&#x27;;
+ const base=&#x27;https://raw.githubusercontent.com/kaushik-himself/n3n-site/fd63ac8c2fe64324743bdbd645c2cfc84eeccfe4/&#x27;;
+ const sourceBase=&#x27;https://github.com/kaushik-himself/n3n-site/blob/fd63ac8c2fe64324743bdbd645c2cfc84eeccfe4/&#x27;;
  const listView=page.querySelector(&#x27;[data-blog-list-view]&#x27;);
  const readerView=page.querySelector(&#x27;[data-blog-reader-view]&#x27;);
  const list=page.querySelector(&#x27;[data-blog-list]&#x27;);
@@ -3348,6 +3348,7 @@ new ResizeObserver(()=&gt;{const next=stage.clientWidth+&#x27;x&#x27;+stage.clie
  const articleCache=new Map();
  function el(tag,text,className){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;return node;}
  function external(text,url){const a=el(&#x27;a&#x27;,text);a.href=url;a.target=&#x27;_blank&#x27;;a.rel=&#x27;noopener noreferrer&#x27;;return a;}
+ function publishedArticle(item){return typeof item.url===&#x27;string&#x27;&amp;&amp;/^https:\/\/n3n\.lol\/writing\/[a-z0-9-]+\/$/.test(item.url)?item.url:null;}
  function dateLabel(date){return new Intl.DateTimeFormat(&#x27;en-US&#x27;,{month:&#x27;long&#x27;,day:&#x27;numeric&#x27;,year:&#x27;numeric&#x27;,timeZone:&#x27;UTC&#x27;}).format(new Date(date+&#x27;T12:00:00Z&#x27;));}
  async function fetchText(path){
   const controller=new AbortController(),timer=setTimeout(()=&gt;controller.abort(),15000);
@@ -3363,7 +3364,7 @@ new ResizeObserver(()=&gt;{const next=stage.clientWidth+&#x27;x&#x27;+stage.clie
    list.replaceChildren();
    entries.forEach(item=&gt;{
     const row=el(&#x27;div&#x27;,undefined,&#x27;n-blog-row&#x27;);row.setAttribute(&#x27;role&#x27;,&#x27;listitem&#x27;);
-    const link=el(&#x27;a&#x27;,undefined,&#x27;n-blog-open&#x27;);link.href=&#x27;#build-note-&#x27;+item.path.split(&#x27;/&#x27;).pop().replace(&#x27;.md&#x27;,&#x27;&#x27;);link.setAttribute(&#x27;aria-label&#x27;,&#x27;Read article: &#x27;+item.title);
+    const link=el(&#x27;a&#x27;,undefined,&#x27;n-blog-open&#x27;);link.href=publishedArticle(item)||&#x27;#build-note-&#x27;+item.path.split(&#x27;/&#x27;).pop().replace(&#x27;.md&#x27;,&#x27;&#x27;);link.setAttribute(&#x27;aria-label&#x27;,&#x27;Read article: &#x27;+item.title);
     const date=el(&#x27;time&#x27;,dateLabel(item.date),&#x27;n-blog-date&#x27;);date.dateTime=item.date;
     const title=el(&#x27;h3&#x27;);title.append(el(&#x27;span&#x27;,item.title,&#x27;n-blog-link-title&#x27;));
     const arrow=el(&#x27;span&#x27;,&#x27;→&#x27;,&#x27;n-blog-link-arrow&#x27;);arrow.setAttribute(&#x27;aria-hidden&#x27;,&#x27;true&#x27;);title.append(arrow);
@@ -3401,7 +3402,7 @@ new ResizeObserver(()=&gt;{const next=stage.clientWidth+&#x27;x&#x27;+stage.clie
   page.dispatchEvent(new CustomEvent(&#x27;n3n-page-title&#x27;,{bubbles:true,detail:{title:item.title,description:item.description,article:true}}));const version=++readerVersion;page.classList.add(&#x27;n-blog-reading&#x27;);listView.hidden=true;readerView.hidden=false;content.scrollTop=0;page.querySelector(&#x27;[data-blog-back]&#x27;).focus({preventScroll:true});
   const title=el(&#x27;h2&#x27;,item.title);title.id=&#x27;n-github-article-title&#x27;;
   const date=el(&#x27;time&#x27;,dateLabel(item.date));date.dateTime=item.date;
-  const meta=el(&#x27;p&#x27;,undefined,&#x27;n-blog-meta&#x27;);meta.append(date,document.createTextNode(&#x27; · &#x27;),external(&#x27;Source on GitHub ↗&#x27;,sourceBase+item.path));
+  const meta=el(&#x27;p&#x27;,undefined,&#x27;n-blog-meta&#x27;);meta.append(date,document.createTextNode(&#x27; · &#x27;),external(&#x27;Source on GitHub ↗&#x27;,sourceBase+item.path));if(publishedArticle(item))meta.append(document.createTextNode(&#x27; · &#x27;),external(&#x27;Open article ↗&#x27;,publishedArticle(item)));
   header.replaceChildren(el(&#x27;p&#x27;,&#x27;How it’s made&#x27;,&#x27;n-eyebrow&#x27;),title,el(&#x27;p&#x27;,item.description,&#x27;n-article-deck&#x27;),meta);
   outline.hidden=true;body.replaceChildren(el(&#x27;p&#x27;,&#x27;Loading the article from GitHub…&#x27;));body.removeAttribute(&#x27;data-source&#x27;);
   try{
