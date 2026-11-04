@@ -2,7 +2,8 @@
 title: "Build this site with an AI agent"
 description: "An implementation brief for a coding agent, with design constraints, build stages, and acceptance checks."
 pubDate: 2026-11-03
-draft: true
+slug: build-with-an-ai-agent
+draft: false
 ---
 
 Give your coding agent a brief, your content, and your drawings. Ask it to build and test the site. Review the result in the same browser where you will use it.

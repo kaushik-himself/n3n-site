@@ -11,7 +11,7 @@ const formatDate = (date:Date) => date.toLocaleDateString('en-US',{month:'short'
       <p class="eyebrow"><span class="tiny-mark" aria-hidden="true"></span> A personal corner of the internet</p>
       <h1 id="hero-title">I’m Neha.<br />I read, build,<br />and <em>write.</em></h1>
       <p class="hero-description">Technology, systems, and the ideas I keep coming back to. This is where I put some of them.</p>
-      <a class="text-link" href="https://nupoorneha.substack.com">Read the writing <span aria-hidden="true">→</span></a>
+      <a class="text-link" href="/writing/">Read the writing <span aria-hidden="true">→</span></a>
     </div>
     <div class="hero-art" aria-hidden="true">
       <div class="art-caption"><span>Notes from the margins</span><span>01 / n3n</span></div>
@@ -52,7 +52,7 @@ const formatDate = (date:Date) => date.toLocaleDateString('en-US',{month:'short'
     </div>
   </section>
   <section class="writing-section" aria-labelledby="writing-title">
-    <div class="section-heading"><div><p class="eyebrow">From the notebook</p><h2 id="writing-title">A little <em>writing.</em></h2></div><a class="text-link" href="https://nupoorneha.substack.com">All writing <span aria-hidden="true">→</span></a></div>
+    <div class="section-heading"><div><p class="eyebrow">From the notebook</p><h2 id="writing-title">A little <em>writing.</em></h2></div><a class="text-link" href="/writing/">All writing <span aria-hidden="true">→</span></a></div>
     <div class="post-list">{posts.map((post,index) => <a class="post-row" href={`/writing/${post.slug}/`}><span class="post-number">{String(index+1).padStart(2,'0')}</span><div><h3>{post.data.title}</h3>{post.data.description && <p>{post.data.description}</p>}</div><div class="post-date"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time><span aria-hidden="true">↗</span></div></a>)}</div>
     {posts.length === 0 && <p class="empty-note">Nothing published here yet. The reading room is open.</p>}
   </section>

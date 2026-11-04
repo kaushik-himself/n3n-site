@@ -6,7 +6,8 @@
       "title": "Build this site with an AI agent",
       "description": "An implementation brief for a coding agent, with design constraints, build stages, and acceptance checks.",
       "date": "2026-11-03",
-      "path": "src/content/blog/making-n3n.md"
+      "path": "src/content/blog/making-n3n.md",
+      "url": "https://n3n.lol/writing/build-with-an-ai-agent/"
     }
   ]
 }
