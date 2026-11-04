@@ -146,8 +146,11 @@ function layoutDesktopArt(rect){
  place('[data-doodle="paintbrush"]',!mobile&&brushLength>=110,rect.x-24-12*brushLength/174,rect.y+rect.height*.70-brushLength/2,24*brushLength/174,brushLength,-58);
  const below=height-rect.y-rect.height;
  place('[data-doodle="pizza"]',!mobile&&below>=82,Math.max(24,rect.x+rect.width*.12),rect.y+rect.height+12,118,60);
- const cloudWidth=mobile?112:Math.min(145,right-32);
- place('.n-cloud-pair',mobile||cloudWidth>=72,mobile?(width-cloudWidth)/2:rect.x+rect.width+(right-cloudWidth)/2,mobile?15:rect.y+rect.height-100,cloudWidth,mobile?32:64);
+ const sideCloudWidth=Math.min(145,right-52),sideRoom=sideCloudWidth>=72;
+ const cloudWidth=mobile?112:sideRoom?sideCloudWidth:124;
+ const cloudX=mobile?(width-cloudWidth)/2:sideRoom?rect.x+rect.width+(right-cloudWidth)/2:width-cloudWidth-28;
+ const cloudY=mobile?15:sideRoom?rect.y+rect.height-100:rect.y+rect.height+14;
+ place('.n-cloud-pair',true,cloudX,cloudY,cloudWidth,mobile?32:54);
 }
 function fitSharedReading(){
  const viewport=root.querySelector('.n-reading-stage'),frame=root.querySelector('.n-reading-frame'),width=viewport.clientWidth,height=viewport.clientHeight;
@@ -263,7 +266,9 @@ new ResizeObserver(()=>{const next=stage.clientWidth+'x'+stage.clientHeight;if(n
    if(state&&['open','minimized','closed'].includes(state.status))sharedWindow.status=state.status;
    if(state){sharedWindow.maximized=!!state.maximized;sharedWindow.userSized=!!state.userSized;}
    const r=state?.rect;if(r&&['x','y','width','height'].every(k=>Number.isFinite(r[k])))sharedWindow.rect=sharedWindow.userSized?r:null;
-   if(typeof saved.ambientMotion==='boolean'){ambientMotion=saved.ambientMotion;syncAmbientMotion();}
+   // The retired wallpaper picker no longer exposes this saved toggle.
+   // Cloud motion now follows the current reduced-motion preference.
+   ambientMotion=true;
   }
   setWallpaper(own&&Object.hasOwn(paintings,saved.wallpaper)?saved.wallpaper:'sketchbook',false);
   const status='open';
@@ -282,7 +287,7 @@ new ResizeObserver(()=>{const next=stage.clientWidth+'x'+stage.clientHeight;if(n
   'saint-joseph':{label:'Domaine Saint-Joseph',title:'View of the Domaine Saint-Joseph',artist:'Paul Cézanne',date:'late 1880s',medium:'Oil on canvas',object:435885,width:3811,height:3049,position:'50% 50%'},
   'pontoise':{label:'Côte des Grouettes',title:'Côte des Grouettes, near Pontoise',artist:'Camille Pissarro',date:'probably 1878',medium:'Oil on canvas',object:437316,width:3042,height:3716,position:'50% 65%'}
  };
- let artRequest=0,sketchInk=[];
+ let artRequest=0,sketchInk=[],cloudFrame=0,cloudElapsed=0;
  const artLayer=root.querySelector('.n-wallpaper'),artStatus=root.querySelector('.n-picker-status');
  const backgroundReplay=root.querySelector('.n-background-replay');
  const ambientSetting=root.querySelector('.n-ambient-setting'),ambientInput=root.querySelector('.n-ambient-input');
@@ -311,7 +316,7 @@ new ResizeObserver(()=>{const next=stage.clientWidth+'x'+stage.clientHeight;if(n
   if(!isSketch){link.href='https://www.metmuseum.org/art/collection/search/'+work.object;link.textContent=work.artist+' · The Met ↗';link.setAttribute('aria-label',work.title+' by '+work.artist+' — view museum record');}
   artStatus.textContent='Selected: '+work.label;artStatus.setAttribute('aria-busy','false');
  }
- function clearSketchInk(){sketchInk.forEach(completeInk);sketchInk=[];}
+ function clearSketchInk(){cancelAnimationFrame(cloudFrame);cloudFrame=0;sketchInk.forEach(completeInk);sketchInk=[];}
  function addWaveMotion(art){
   const ns='http://www.w3.org/2000/svg',image=art.querySelector('image'),defs=art.querySelector('defs');
   const width=Number(image.getAttribute('width')),height=Number(image.getAttribute('height')),box=art.viewBox.baseVal;
@@ -397,9 +402,27 @@ new ResizeObserver(()=>{const next=stage.clientWidth+'x'+stage.clientHeight;if(n
   if(backgroundReplay)backgroundReplay.querySelector('span').textContent=motionPreference.matches?'Still':'Replay';
   syncAmbientMotion();
  }
+ function syncCloudMotion(moving){
+  cancelAnimationFrame(cloudFrame);cloudFrame=0;
+  const cloud=root.querySelector('.n-cloud-pair');if(!cloud)return;
+  cloud.style.animation='none';
+  if(!moving){cloud.style.transform='none';return;}
+  let previous=performance.now();
+  function drift(now){
+   const delta=Math.min(50,Math.max(0,now-previous));previous=now;
+   if(!document.hidden){
+    cloudElapsed+=delta;const phase=cloudElapsed*Math.PI*2/80000;
+    const x=18*Math.sin(phase),y=1.5*(Math.cos(phase)-1);
+    cloud.style.transform='translate3d('+x.toFixed(3)+'px,'+y.toFixed(3)+'px,0)';
+   }
+   cloudFrame=requestAnimationFrame(drift);
+  }
+  cloudFrame=requestAnimationFrame(drift);
+ }
  function syncAmbientMotion(){
   const moving=ambientMotion&&!motionPreference.matches;root.dataset.ambientMotion=moving?'on':'off';
   ambientInput.checked=moving;ambientInput.disabled=motionPreference.matches;
+  syncCloudMotion(moving);
   root.querySelectorAll('.n-wave-vignette').forEach(art=>{if(moving&&typeof art.unpauseAnimations==='function')art.unpauseAnimations();else if(typeof art.pauseAnimations==='function')art.pauseAnimations();});
  }
  backgroundReplay?.addEventListener('click',()=>sketchInk.forEach(drawInk));
