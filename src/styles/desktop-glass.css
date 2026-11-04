@@ -45,9 +45,12 @@
 }
 #n3n-desktop .n-site-dock:before{background:radial-gradient(ellipse 160px 65px at var(--glass-x) var(--glass-y),#ffffffb3,transparent 85%)}
 #n3n-desktop .n-background-drawing[data-doodle=glasses-girl]{transform:none}
+/* One gentle cloud drift: 12px across a two-minute round trip. */
+@keyframes n3n-quiet-cloud{from{transform:translate3d(-6px,0,0)}to{transform:translate3d(6px,-1px,0)}}
+#n3n-desktop .n-stage:not(.n-art-only) .n-cloud-pair{animation:n3n-quiet-cloud 60s ease-in-out -15s infinite alternate}
+#n3n-desktop[data-ambient-motion=off] .n-stage:not(.n-art-only) .n-cloud-pair{animation-play-state:paused}
 /* Mobile has one whole cloud in its own strip, outside every app window. */
 @media(max-width:699px){
- #n3n-desktop .n-stage:not(.n-art-only) .n-cloud-pair{animation:n3n-cloud-rest 22s ease-in-out -4s infinite alternate}
  #n3n-desktop .n-stage:not(.n-art-only) .n-cloud-pair .n-paired-cloud:first-child{width:100%;height:auto}
  #n3n-desktop .n-stage:not(.n-art-only) .n-cloud-pair .n-paired-cloud:last-child{display:none}
  #n3n-desktop .n-app-window .n-titlebar{background:linear-gradient(110deg,#ffffff8c,#ffffff26 50%,#ffffff66)}
