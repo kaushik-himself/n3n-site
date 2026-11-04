@@ -62,6 +62,7 @@
   content.classList.toggle('n-showing-live-app',live);content.classList.toggle('n-showing-home',name==='home');windows.about.classList.toggle('n-reading-active',live);
   if(live){const frame=root.querySelector('.n-reading-frame');if(!frame.hasAttribute('src'))frame.src=frame.dataset.src;}
   content.scrollTop=0;fitSharedReading();front(windows.about);syncDock();if(save)persist();
+  window.dispatchEvent(new CustomEvent('n3n-view-change',{detail:{view:name}}));
  }
  root.querySelectorAll('[data-site-page]').forEach(b=>b.addEventListener('click',event=>{if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;if(b.tagName==='A')event.preventDefault();showSitePage(b.dataset.sitePage);if(b.dataset.sitePage==='products')root.querySelector('[data-agents-tab="'+(b.dataset.agentsSection||'skills')+'"]').click();}));
  root.querySelector('.n-site-sidebar-toggle').addEventListener('click',e=>{const collapsed=windows.about.classList.toggle('n-sidebar-collapsed');e.currentTarget.setAttribute('aria-expanded',String(!collapsed));});

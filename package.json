@@ -7,7 +7,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "deploy": "npm run build && wrangler deploy --keep-vars",
-    "check:discovery": "python3 scripts/check-discovery.py"
+    "check:discovery": "python3 scripts/check-discovery.py",
+    "predev": "python3 scripts/sync_substack.py",
+    "prebuild": "python3 scripts/sync_substack.py",
+    "test": "python3 -m unittest discover -s scripts -p \"test_*.py\" && node --test worker/*.test.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.0",

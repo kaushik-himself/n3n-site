@@ -21,7 +21,9 @@ alone does not prove Cloudflare deployed it.
 
 ## Writing
 
-Writing navigation opens the local `/writing/` index. Each published content entry has a canonical `/writing/<slug>/` HTML page. Substack remains an external link on the writing index. Set `draft: true` to exclude unfinished posts from both page generation and the sitemap. The agent build brief is published at `/writing/build-with-an-ai-agent/`.
+Writing navigation opens the local `/writing/` index. Each published content entry has a canonical `/writing/<slug>/` HTML page. The Writing list merges local articles with public Substack post metadata, newest first. Substack posts open on Substack. `prebuild` and `predev` fetch a metadata snapshot using Python 3; a saved snapshot keeps builds and initial HTML usable if Substack is unavailable. No full Substack article is republished.
+
+Opening Writing also checks `/api/substack.xml`, a Worker endpoint that fetches only the fixed public feed and caches it for 60 seconds. Readers can use Refresh posts to check again. Failed requests preserve the saved list. New Substack posts can appear without a site deployment; local article pages and the search-visible snapshot update on the next build. Set `draft: true` to exclude unfinished posts from both page generation and the sitemap. The agent build brief is published at `/writing/build-with-an-ai-agent/`.
 
 `/sitemap.xml` is generated from the same published collection. `/robots.txt` allows crawling and declares that sitemap. Page metadata includes canonical URLs, social images, and accurate Person/WebSite/WebPage or BlogPosting JSON-LD. Run `python3 scripts/check-discovery.py` after building to check these public-page contracts.
 
