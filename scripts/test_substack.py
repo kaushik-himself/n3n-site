@@ -1,5 +1,9 @@
 import unittest
-from sync_substack import parse_feed
+from sync_substack import parse_feed, main
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
+import json
 
 
 def item(url='https://nupoorneha.substack.com/p/example', date='Wed, 04 Nov 2026 06:56:01 GMT'):
@@ -22,6 +26,22 @@ class FeedTests(unittest.TestCase):
                item(date='not a date')]
         source = ('<rss><channel>' + ''.join(bad) + item() + '</channel></rss>').encode()
         self.assertEqual(len(parse_feed(source)), 1)
+
+    def test_offline_build_keeps_previous_snapshot_or_checked_in_fallback(self):
+        for previous in [False, True]:
+            with self.subTest(previous=previous), TemporaryDirectory() as directory:
+                root = Path(directory)
+                (root / 'content').mkdir()
+                fallback = [{'title': 'Checked-in post'}]
+                (root / 'content/substack-fallback.json').write_text(json.dumps(fallback))
+                destination = root / 'src/generated/substack.json'
+                if previous:
+                    destination.parent.mkdir(parents=True)
+                    destination.write_text(json.dumps([{'title': 'Previous build'}]))
+                with patch('sync_substack.ROOT', root), patch('sync_substack.urlopen', side_effect=OSError('offline')), patch('builtins.print'):
+                    main()
+                expected = [{'title': 'Previous build'}] if previous else fallback
+                self.assertEqual(json.loads(destination.read_text()), expected)
 
     def test_invalid_empty_and_entity_feeds_fail(self):
         for source in [b'not XML', b'<rss><channel/></rss>',

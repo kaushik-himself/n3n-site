@@ -46,4 +46,3 @@ export async function handleRequest(request, env, ctx, fetchFeed = fetch, cache 
     });
   }
 }
-
