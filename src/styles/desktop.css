@@ -937,16 +937,12 @@ html[data-visualize-standalone],html[data-visualize-standalone]>body{margin:0!im
 
 #n3n-desktop .n-blog-reading>.n-page-location,#n3n-desktop .n-blog-reading>.n-agents-intro,#n3n-desktop .n-blog-reading>.n-agents-tabs{display:none}
 
-/* A stable picture frame for the rotating sketchbook. */
-#n3n-desktop .n-home-hero .n-portrait .n-sketchbook-stage{display:grid;place-items:center;width:150px;max-width:100%;height:175px;opacity:1;transition:opacity .22s ease}
-#n3n-desktop .n-home-hero .n-portrait .n-sketchbook-stage.n-sketch-changing{opacity:0}
+/* A stable frame for the original sketchbook portrait. */
+#n3n-desktop .n-home-hero .n-portrait .n-sketchbook-stage{display:grid;place-items:center;width:150px;max-width:100%;height:175px;opacity:1}
 #n3n-desktop .n-home-hero .n-portrait .n-sketchbook-stage .n-ink{width:100%;height:100%;object-fit:contain}
 #n3n-desktop .n-home-hero .n-portrait figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:8px;text-align:left}
-#n3n-desktop .n-sketchbook-pause{background:transparent;color:#777;font-size:9px;padding:2px 0;border:0;border-bottom:1px solid #ccc;border-radius:0}
-#n3n-desktop .n-sketchbook-pause:disabled{display:none}
 @container n3n-window (max-width:900px){#n3n-desktop .n-home-hero .n-portrait .n-sketchbook-stage{width:110px;height:140px}#n3n-desktop .n-home-hero .n-portrait figcaption{flex-wrap:wrap}}
 @container n3n-window (max-width:650px){#n3n-desktop .n-app-window .n-site-monogram{font-size:21px;letter-spacing:-1.8px}}
-@media(prefers-reduced-motion:reduce){#n3n-desktop .n-sketchbook-stage{transition:none!important}}
 
 /* Keep every rotating drawing inside the same frame. */
 #n3n-desktop .n-home-hero .n-portrait{transform:none!important}
