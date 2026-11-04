@@ -207,3 +207,5 @@
 }
 
 #n3n-desktop .n-app-window .n-site-page.n-live-app{max-width:none;width:100%;height:100%}
+
+#n3n-desktop .n-build-article pre.n-agent-brief{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.8}

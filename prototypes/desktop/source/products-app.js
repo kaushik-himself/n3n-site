@@ -1,8 +1,8 @@
 (()=>{
  const page=document.querySelector('#n3n-desktop .n-products-page');
  const content=page.closest('.n-site-content');
- const base='https://raw.githubusercontent.com/kaushik-himself/n3n-site/a1560392092bd8656da1d432520d5ef94d33f3bd/';
- const sourceBase='https://github.com/kaushik-himself/n3n-site/blob/a1560392092bd8656da1d432520d5ef94d33f3bd/';
+ const base='https://raw.githubusercontent.com/kaushik-himself/n3n-site/09e0f5e517d65b96ba42b8ac9f5655c3a874a727/';
+ const sourceBase='https://github.com/kaushik-himself/n3n-site/blob/09e0f5e517d65b96ba42b8ac9f5655c3a874a727/';
  const listView=page.querySelector('[data-blog-list-view]');
  const readerView=page.querySelector('[data-blog-reader-view]');
  const list=page.querySelector('[data-blog-list]');
@@ -50,10 +50,10 @@
  function renderMarkdown(markdown){
   body.replaceChildren();outline.replaceChildren();outline.hidden=true;
   const lines=markdown.replace(/^\uFEFF/,'').replace(/^---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/,'').split(/\r?\n/);
-  let paragraph=[],code=null,bullets=null,headingCount=0;
+  let paragraph=[],code=null,codeLanguage='',bullets=null,headingCount=0;
   function flush(){if(paragraph.length){const p=el('p');inline(p,paragraph.join(' '));body.append(p);paragraph=[];}bullets=null;}
   for(const line of lines){
-   if(/^```/.test(line)){flush();if(code!==null){const pre=el('pre');pre.append(el('code',code.join('\n')));body.append(pre);code=null;}else code=[];continue;}
+   if(/^```/.test(line)){flush();if(code!==null){const pre=el('pre',undefined,codeLanguage==='text'?'n-agent-brief':'');pre.append(el('code',code.join('\n')));body.append(pre);code=null;}else{code=[];codeLanguage=line.slice(3).trim();}continue;}
    if(code!==null){code.push(line);continue;}
    const heading=line.match(/^(#{1,4})\s+(.+)$/);
    if(heading){flush();const h=el(heading[1].length>2?'h4':'h3',heading[2]);h.id='n-build-section-'+(++headingCount);body.append(h);const a=el('a',heading[2]);a.href='#'+h.id;a.addEventListener('click',event=>{event.preventDefault();h.scrollIntoView({block:'start'});});outline.append(a);continue;}
