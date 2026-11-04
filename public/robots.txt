@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://n3n.lol/sitemap.xml

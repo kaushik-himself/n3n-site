@@ -21,10 +21,9 @@ alone does not prove Cloudflare deployed it.
 
 ## Writing
 
-Writing navigation and homepage calls to action open https://nupoorneha.substack.com.
-The static asset `_redirects` file sends `/writing` and `/writing/` there with HTTP 301.
-The generated index includes a browser redirect and clickable fallback. Existing
-article routes are preserved; Markdown or MDX content remains in `src/content/blog/`.
+Writing navigation opens the local `/writing/` index. Each published content entry has a canonical `/writing/<slug>/` HTML page. Substack remains an external link on the writing index. Set `draft: true` to exclude unfinished posts from both page generation and the sitemap. The agent build brief is published at `/writing/build-with-an-ai-agent/`.
+
+`/sitemap.xml` is generated from the same published collection. `/robots.txt` allows crawling and declares that sitemap. Page metadata includes canonical URLs, social images, and accurate Person/WebSite/WebPage or BlogPosting JSON-LD. Run `python3 scripts/check-discovery.py` after building to check these public-page contracts.
 
 ## Privacy, terms, and Google OAuth branding
 

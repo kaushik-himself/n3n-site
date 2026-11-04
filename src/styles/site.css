@@ -791,3 +791,8 @@ em {
     transition: none !important;
   }
 }
+
+.writing-intro { color: var(--muted); margin-bottom: 30px; }
+.writing-index > .post-list .post-row { grid-template-columns: minmax(0, 1fr) auto; }
+.prose pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 650px) { .writing-index > .post-list .post-row { grid-template-columns: 1fr; gap: 12px; } }

@@ -1,0 +1,176 @@
+[
+  {
+    "id": "oise-valley",
+    "label": "In the Oise Valley",
+    "title": "In the Oise Valley",
+    "artist": "Paul Cézanne",
+    "date": "1878–80",
+    "medium": "Graphite, gouache, and watercolor",
+    "note": "Soft greens · watercolor",
+    "museum": "The Metropolitan Museum of Art",
+    "source": "https://www.metmuseum.org/art/collection/search/334350",
+    "license": "CC0 / The Met Open Access",
+    "publicDomain": true,
+    "sourceImage": "https://images.metmuseum.org/CRDImages/dp/original/DT9828.jpg",
+    "sourceSha256": "4e0c82c1ba05d2befd628d0e48a7a9770621bd9d3a7ce7d58925fcf5f5164eb5",
+    "width": 3811,
+    "height": 2501,
+    "sizes": [
+      768,
+      1440,
+      2560
+    ],
+    "position": "50% 45%",
+    "fallbackBytes": 504059,
+    "webpBytes": {
+      "768": 80228,
+      "1440": 227044,
+      "2560": 623812
+    }
+  },
+  {
+    "id": "arc-valley",
+    "label": "The Arc River Valley",
+    "title": "Mont Sainte-Victoire and the Viaduct of the Arc River Valley",
+    "artist": "Paul Cézanne",
+    "date": "1882–85",
+    "medium": "Oil on canvas",
+    "note": "Olive groves · oil",
+    "museum": "The Metropolitan Museum of Art",
+    "source": "https://www.metmuseum.org/art/collection/search/435877",
+    "license": "CC0 / The Met Open Access",
+    "publicDomain": true,
+    "sourceImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-20099-001.jpg",
+    "sourceSha256": "034a91583008e7237b6d87effb5d95bd9504632eef925fe14ecd57ffa8fbcae8",
+    "width": 4000,
+    "height": 3225,
+    "sizes": [
+      768,
+      1440,
+      2560
+    ],
+    "position": "50% 48%",
+    "fallbackBytes": 641231,
+    "webpBytes": {
+      "768": 85160,
+      "1440": 297632,
+      "2560": 1164910
+    }
+  },
+  {
+    "id": "sainte-victoire",
+    "label": "Mont Sainte-Victoire",
+    "title": "Mont Sainte-Victoire",
+    "artist": "Paul Cézanne",
+    "date": "ca. 1902–6",
+    "medium": "Oil on canvas",
+    "note": "Blue mountains · oil",
+    "museum": "The Metropolitan Museum of Art",
+    "source": "https://www.metmuseum.org/art/collection/search/435878",
+    "license": "CC0 / The Met Open Access",
+    "publicDomain": true,
+    "sourceImage": "https://images.metmuseum.org/CRDImages/ep/original/77J_045R2M.jpg",
+    "sourceSha256": "b36e321eef0922c85ba60b3f1be742235b0da4d70f8f5670a83ca1364f4e0b85",
+    "width": 3001,
+    "height": 1780,
+    "sizes": [
+      768,
+      1440,
+      2560
+    ],
+    "position": "50% 45%",
+    "fallbackBytes": 717202,
+    "webpBytes": {
+      "768": 81064,
+      "1440": 373012,
+      "2560": 1305474
+    }
+  },
+  {
+    "id": "fontainebleau",
+    "label": "Rocks at Fontainebleau",
+    "title": "Rocks at Fontainebleau",
+    "artist": "Paul Cézanne",
+    "date": "1890s",
+    "medium": "Oil on canvas",
+    "note": "Violet & sage · oil",
+    "museum": "The Metropolitan Museum of Art",
+    "source": "https://www.metmuseum.org/art/collection/search/435880",
+    "license": "CC0 / The Met Open Access",
+    "publicDomain": true,
+    "sourceImage": "https://images.metmuseum.org/CRDImages/ep/original/DP-23704-001.jpg",
+    "sourceSha256": "5b0b22e8a3917deb6953f3f1befde5e5793ed5c74b1998cc6bb77cc33e7d4e34",
+    "width": 4000,
+    "height": 3207,
+    "sizes": [
+      768,
+      1440,
+      2560
+    ],
+    "position": "50% 50%",
+    "fallbackBytes": 501839,
+    "webpBytes": {
+      "768": 62958,
+      "1440": 198116,
+      "2560": 745328
+    }
+  },
+  {
+    "id": "saint-joseph",
+    "label": "Domaine Saint-Joseph",
+    "title": "View of the Domaine Saint-Joseph",
+    "artist": "Paul Cézanne",
+    "date": "late 1880s",
+    "medium": "Oil on canvas",
+    "note": "Open brushwork · oil",
+    "museum": "The Metropolitan Museum of Art",
+    "source": "https://www.metmuseum.org/art/collection/search/435885",
+    "license": "CC0 / The Met Open Access",
+    "publicDomain": true,
+    "sourceImage": "https://images.metmuseum.org/CRDImages/ep/original/DT1937.jpg",
+    "sourceSha256": "eee7b60db21b13b1f0193b3eb5d65362b7d3300e80b1eaff436bed82a9549b94",
+    "width": 3811,
+    "height": 3049,
+    "sizes": [
+      768,
+      1440,
+      2560
+    ],
+    "position": "50% 50%",
+    "fallbackBytes": 649113,
+    "webpBytes": {
+      "768": 94606,
+      "1440": 305246,
+      "2560": 937666
+    }
+  },
+  {
+    "id": "pontoise",
+    "label": "Côte des Grouettes",
+    "title": "Côte des Grouettes, near Pontoise",
+    "artist": "Camille Pissarro",
+    "date": "probably 1878",
+    "medium": "Oil on canvas",
+    "note": "Country path · oil",
+    "museum": "The Metropolitan Museum of Art",
+    "source": "https://www.metmuseum.org/art/collection/search/437316",
+    "license": "CC0 / The Met Open Access",
+    "publicDomain": true,
+    "sourceImage": "https://images.metmuseum.org/CRDImages/ep/original/DT1043.jpg",
+    "sourceSha256": "a11afa37e583aa153c35e01837f49511bd38b8b5e0710509c9090e6b508003f2",
+    "width": 3042,
+    "height": 3716,
+    "sizes": [
+      768,
+      1440,
+      2560
+    ],
+    "position": "50% 47%",
+    "fallbackBytes": 1244049,
+    "webpBytes": {
+      "768": 188474,
+      "1440": 662440,
+      "2560": 1936428
+    }
+  }
+]

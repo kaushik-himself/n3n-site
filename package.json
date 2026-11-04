@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy": "npm run build && wrangler deploy --keep-vars"
+    "deploy": "npm run build && wrangler deploy --keep-vars",
+    "check:discovery": "python3 scripts/check-discovery.py"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.0",
